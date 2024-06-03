@@ -4,9 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessingTextFiles"
+        xmlns:VMs="clr-namespace:ProcessingTextFiles.ViewModels.Controls" 
+        xmlns:views="clr-namespace:ProcessingTextFiles.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <VMs:TextProcessingControlViewModel x:Key="TextProcessingControlViewModelVMInstance"/>
+    </Window.Resources>
     <Grid>
-
+        <views:TextProcessingControlView d:DataContext="{d:DesignInstance Type=VMs:TextProcessingControlViewModel, IsDesignTimeCreatable=True}"
+                                         DataContext="{StaticResource TextProcessingControlViewModelVMInstance}"
+                                         ></views:TextProcessingControlView>
     </Grid>
 </Window>
