@@ -4,16 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProcessingTextFiles"
-        xmlns:VMs="clr-namespace:ProcessingTextFiles.ViewModels.Controls" 
-        xmlns:views="clr-namespace:ProcessingTextFiles.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}"        
+        >
+    <Window.DataContext>
+        <local:MainViewModel />
+    </Window.DataContext>
     <Window.Resources>
-        <VMs:TextProcessingControlViewModel x:Key="TextProcessingControlViewModelVMInstance"/>
+        <local:ViewModelDataTemplateSelector x:Key="ViewModelTemplateSelector"/>
     </Window.Resources>
-    <Grid>
-        <views:TextProcessingControlView d:DataContext="{d:DesignInstance Type=VMs:TextProcessingControlViewModel, IsDesignTimeCreatable=True}"
-                                         DataContext="{StaticResource TextProcessingControlViewModelVMInstance}"
-                                         ></views:TextProcessingControlView>
-    </Grid>
+    <StackPanel>
+        <d:ListBox>
+            <ListBox.Items>
+                <TextBlock>qwe</TextBlock>
+                <TextBlock>qwe</TextBlock>
+                <TextBlock>qwe</TextBlock>
+            </ListBox.Items>
+        </d:ListBox>
+        <ListBox ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
+    </StackPanel>
 </Window>

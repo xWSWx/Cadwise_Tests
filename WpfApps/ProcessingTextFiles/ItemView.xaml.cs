@@ -1,5 +1,4 @@
-﻿using ProcessingTextFiles.ViewModels.Controls;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,27 +14,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProcessingTextFiles.Views
+namespace ProcessingTextFiles
 {
     /// <summary>
-    /// Логика взаимодействия для TextProcessingControlView.xaml
+    /// Логика взаимодействия для ItemView.xaml
     /// </summary>
-    public partial class TextProcessingControlView : UserControl, IViewFor<TextProcessingControlViewModel>
+    public partial class ItemView : UserControl, IViewFor<ItemViewModel>
     {
-        public TextProcessingControlView()
+        public ItemView()
         {
             InitializeComponent();
+            this.WhenActivated(d => { /* Handle activation */ });
         }
-        public TextProcessingControlViewModel ViewModel
+
+        public ItemViewModel ViewModel
         {
-            get => (TextProcessingControlViewModel)DataContext;
+            get => (ItemViewModel)DataContext;
             set => DataContext = value;
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (TextProcessingControlViewModel)value;
+            set => ViewModel = (ItemViewModel)value;
         }
     }
 }
