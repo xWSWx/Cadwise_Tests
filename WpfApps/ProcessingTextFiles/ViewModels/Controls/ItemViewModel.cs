@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProcessingTextFiles
+namespace ProcessingTextFiles.ViewModels.Controls
 {
     public class ItemViewModel : ReactiveObject
     {
@@ -20,6 +20,11 @@ namespace ProcessingTextFiles
         {
             get => _name;
             set => this.RaiseAndSetIfChanged(ref _name, value);
+        }
+
+        public ItemViewModel() 
+        {
+            Name = "Dummy string";
         }
     }
 }

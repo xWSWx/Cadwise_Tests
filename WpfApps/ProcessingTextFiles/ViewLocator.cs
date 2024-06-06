@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using ProcessingTextFiles.ViewModels.Controls;
+using ReactiveUI;
 using Splat;
 using System;
 using System.Collections.Generic;

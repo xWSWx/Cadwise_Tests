@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using ProcessingTextFiles.ViewModels.Controls;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProcessingTextFiles
+namespace ProcessingTextFiles.ViewModels
 {
     public class MainViewModel : ReactiveObject
     {

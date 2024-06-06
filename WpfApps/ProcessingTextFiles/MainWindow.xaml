@@ -3,13 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ViewModels="clr-namespace:ProcessingTextFiles.ViewModels"
         xmlns:local="clr-namespace:ProcessingTextFiles"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance Type=local:MainViewModel, IsDesignTimeCreatable=True}"        
+        d:DataContext="{d:DesignInstance Type=ViewModels:MainViewModel, IsDesignTimeCreatable=True}"        
         >
     <Window.DataContext>
-        <local:MainViewModel />
+        <ViewModels:MainViewModel />
     </Window.DataContext>
     <Window.Resources>
         <local:ViewModelDataTemplateSelector x:Key="ViewModelTemplateSelector"/>

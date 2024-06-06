@@ -1,4 +1,6 @@
-﻿using ReactiveUI;
+﻿using ProcessingTextFiles.ViewModels.Controls;
+using ProcessingTextFiles.Views.Controls;
+using ReactiveUI;
 using Splat;
 using System.Configuration;
 using System.Data;

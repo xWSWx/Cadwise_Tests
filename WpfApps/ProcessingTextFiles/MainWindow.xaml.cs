@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using ProcessingTextFiles.ViewModels;
+using ReactiveUI;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,16 +22,16 @@ namespace ProcessingTextFiles
         {
             InitializeComponent();
         }
-        public MainViewModel ViewModel
+        public MainViewModel? ViewModel
         {
             get => (MainViewModel)DataContext;
             set => DataContext = value;
         }
 
-        object IViewFor.ViewModel
+        object? IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (MainViewModel)value;
+            set => ViewModel = (MainViewModel?)value;
         }
     }
 }

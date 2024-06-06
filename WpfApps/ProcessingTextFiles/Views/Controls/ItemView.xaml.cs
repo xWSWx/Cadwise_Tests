@@ -13,8 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ProcessingTextFiles.ViewModels.Controls;
 
-namespace ProcessingTextFiles
+namespace ProcessingTextFiles.Views.Controls
 {
     /// <summary>
     /// Логика взаимодействия для ItemView.xaml
@@ -27,16 +28,16 @@ namespace ProcessingTextFiles
             this.WhenActivated(d => { /* Handle activation */ });
         }
 
-        public ItemViewModel ViewModel
+        public ItemViewModel? ViewModel
         {
             get => (ItemViewModel)DataContext;
             set => DataContext = value;
         }
 
-        object IViewFor.ViewModel
+        object? IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (ItemViewModel)value;
+            set => ViewModel = (ItemViewModel?)value;
         }
     }
 }
