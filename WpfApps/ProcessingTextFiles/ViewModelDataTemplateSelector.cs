@@ -12,7 +12,7 @@ namespace ProcessingTextFiles
 {
     public class ViewModelDataTemplateSelector : DataTemplateSelector
     {
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        public override DataTemplate? SelectTemplate(object item, DependencyObject container)
         {
             if (item == null)
                 return null;
