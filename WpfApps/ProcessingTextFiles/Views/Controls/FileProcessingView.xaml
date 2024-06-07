@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="ProcessingTextFiles.Views.Controls.FileProcessingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ControlsVM="clr-namespace:ProcessingTextFiles.ViewModels.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="500"
+             d:DataContext="{d:DesignInstance ControlsVM:FileProcessingViewModel, IsDesignTimeCreatable=True}">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <Button DockPanel.Dock="Right" Style="{StaticResource RoundSmallButtonStyle}" VerticalAlignment="Top" Width="20" Height="20" Margin="3">
+                <Image Source="/Assets/Icons/Delete.png" Width="15" Height="15"/>
+            </Button>
+            <Button DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+                <Image Source="/Assets/Icons/Play.png" Width="40" Height="40"/>
+            </Button>
+            <Button DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+                <Image Source="/Assets/Icons/Pause.png" Width="40" Height="40"/>
+            </Button>
+            <Button DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+                <Image Source="/Assets/Icons/Cancel.png" Width="40" Height="40"/>
+            </Button>
+            <Button Command="{Binding Select}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+                <Image Source="/Assets/Icons/Folder.png" Width="40" Height="40"/>
+            </Button>
+            <ListView DockPanel.Dock="Left" Margin="3" Height="100" ItemsSource="{Binding Files}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="IsHitTestVisible" Value="False" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </DockPanel>
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurentProcessingText}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="5,0,5,0"/>
+        <ProgressBar DockPanel.Dock="Bottom" x:Name="progressBar" Value="{Binding CompletePercents, Mode=OneWay}" Height="30" VerticalAlignment="Top" Margin="10,5,10,0" Minimum="0" Maximum="100" />
+    </DockPanel>
+</UserControl>

@@ -13,7 +13,8 @@ namespace ProcessingTextFiles
     {
         private Dictionary<Type, Type> views = new Dictionary<Type, Type>()
         {
-            { typeof(ItemViewModel), typeof(IViewFor<ItemViewModel>) }
+            { typeof(FileProcessingViewModel), typeof(IViewFor<FileProcessingViewModel>) }
+            { typeof(FileViewModel), typeof(IViewFor<FileViewModel>) }
         };
         public IViewFor? ResolveView<T>(T? viewModel, string? contract = null)
         {

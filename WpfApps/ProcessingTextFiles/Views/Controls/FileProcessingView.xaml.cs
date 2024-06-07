@@ -20,24 +20,24 @@ namespace ProcessingTextFiles.Views.Controls
     /// <summary>
     /// Логика взаимодействия для ItemView.xaml
     /// </summary>
-    public partial class ItemView : UserControl, IViewFor<ItemViewModel>
+    public partial class FileProcessingView : UserControl, IViewFor<FileProcessingViewModel>
     {
-        public ItemView()
+        public FileProcessingView()
         {
             InitializeComponent();
             this.WhenActivated(d => { /* Handle activation */ });
         }
 
-        public ItemViewModel? ViewModel
+        public FileProcessingViewModel? ViewModel
         {
-            get => (ItemViewModel)DataContext;
+            get => (FileProcessingViewModel)DataContext;
             set => DataContext = value;
         }
 
         object? IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (ItemViewModel?)value;
+            set => ViewModel = (FileProcessingViewModel?)value;
         }
     }
 }

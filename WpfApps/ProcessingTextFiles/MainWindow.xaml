@@ -13,16 +13,47 @@
         <ViewModels:MainViewModel />
     </Window.DataContext>
     <Window.Resources>
-        <local:ViewModelDataTemplateSelector x:Key="ViewModelTemplateSelector"/>
+       
     </Window.Resources>
     <StackPanel>
-        <d:ListBox>
-            <ListBox.Items>
+        <d:ListView >
+            <ListView.Items>
                 <TextBlock>qwe</TextBlock>
                 <TextBlock>qwe</TextBlock>
                 <TextBlock>qwe</TextBlock>
-            </ListBox.Items>
-        </d:ListBox>
-        <ListBox ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
+            </ListView.Items>
+        </d:ListView>
+        <ListView ItemsSource="{Binding Items}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="3"/>
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#F4F4F4" Offset="0.0" />
+                                <GradientStop Color="#DDDDDD" Offset="1.1" />
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border CornerRadius="3" BorderThickness="1" Background="{TemplateBinding Background}">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#DDDDDD" Offset="0.0" />
+                                            <GradientStop Color="#D4D4F4" Offset="1.1" />
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+
+                                    <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </StackPanel>
 </Window>

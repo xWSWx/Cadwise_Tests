@@ -18,7 +18,8 @@ namespace ProcessingTextFiles
             base.OnStartup(e);
 
             Locator.CurrentMutable.RegisterLazySingleton(() => new ViewLocator(), typeof(IViewLocator));
-            Locator.CurrentMutable.Register(() => new ItemView(), typeof(IViewFor<ItemViewModel>));            
+            Locator.CurrentMutable.Register(() => new FileProcessingView(), typeof(IViewFor<FileProcessingViewModel>));
+            Locator.CurrentMutable.Register(() => new FileView(), typeof(IViewFor<FileViewModel>));
         }
     }
 

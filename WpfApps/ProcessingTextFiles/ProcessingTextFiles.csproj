@@ -9,10 +9,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\Cancel.png" />
+    <None Remove="Assets\Icons\Delete.png" />
+    <None Remove="Assets\Icons\Folder.png" />
+    <None Remove="Assets\Icons\Pause.png" />
+    <None Remove="Assets\Icons\Play.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ReactiveUI" Version="20.1.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="ReactiveUI.WPF" Version="20.1.1" />
     <PackageReference Include="Splat" Version="15.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\Cancel.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Delete.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Folder.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Pause.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Play.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
