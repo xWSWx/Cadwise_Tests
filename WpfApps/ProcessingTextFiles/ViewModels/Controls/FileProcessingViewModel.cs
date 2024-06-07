@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using ProcessingTextFiles.FileProcessing;
+using ProcessingTextFiles.Wrappers;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,9 @@ namespace ProcessingTextFiles.ViewModels.Controls
 {
     public class FileProcessingViewModel : ReactiveObject
     {
-        public ObservableCollection<FileViewModel> Files { get; }
+     
+
+        public ObservableCollection<FileViewModel> Files { get; } = new ObservableCollection<FileViewModel> { };
 
         private string _curentProcessingText;
         public string CurentProcessingText
@@ -32,9 +36,14 @@ namespace ProcessingTextFiles.ViewModels.Controls
         public ICommand Stop { get; }
         public ICommand Pause { get; }
         public ICommand Select { get; }
+
+        CancellationTokenWrapper cancelToken;
+        private Guid id = Guid.NewGuid();
         public FileProcessingViewModel() 
         {
+            cancelToken = new CancellationTokenWrapper(id);
             Select = ReactiveCommand.Create(SelectFiles);
+            Play = ReactiveCommand.Create(() => FileProcessor.Start(Files.Select(x => x.Path), cancelToken));
 
             CurentProcessingText = "Dummy string";
             CompletePercents = 30;

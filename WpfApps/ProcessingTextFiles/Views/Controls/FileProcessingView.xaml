@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ControlsVM="clr-namespace:ProcessingTextFiles.ViewModels.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="500"
+             d:DesignHeight="160" d:DesignWidth="500"
              d:DataContext="{d:DesignInstance ControlsVM:FileProcessingViewModel, IsDesignTimeCreatable=True}">
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
             <Button DockPanel.Dock="Right" Style="{StaticResource RoundSmallButtonStyle}" VerticalAlignment="Top" Width="20" Height="20" Margin="3">
                 <Image Source="/Assets/Icons/Delete.png" Width="15" Height="15"/>
             </Button>
-            <Button DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+            <Button Command="{Binding Play}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
                 <Image Source="/Assets/Icons/Play.png" Width="40" Height="40"/>
             </Button>
             <Button DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
@@ -24,7 +24,7 @@
             <Button Command="{Binding Select}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
                 <Image Source="/Assets/Icons/Folder.png" Width="40" Height="40"/>
             </Button>
-            <ListView DockPanel.Dock="Left" Margin="3" Height="100" ItemsSource="{Binding Files}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}">
+            <ListView DockPanel.Dock="Left" Margin="3" Height="115" ItemsSource="{Binding Files}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="IsHitTestVisible" Value="False" />
