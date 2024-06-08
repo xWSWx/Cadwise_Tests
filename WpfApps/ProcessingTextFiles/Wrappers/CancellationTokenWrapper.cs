@@ -7,13 +7,22 @@ using System.Xml.Linq;
 
 namespace ProcessingTextFiles.Wrappers
 {
-    public class CancellationTokenWrapper : CancellationTokenSource
+    public class CustomCancellationToken
     {
         
         public Guid Id = Guid.Empty;
+        public bool Paused = false;
+        public bool Cancelled = false;
+        public bool Started = false;        
+
+        public void Pause()  => Paused = true;
+        public void Resume() => Paused = false;
+        public void Stop ()  => Cancelled = true;
+        public void Start () => Started = true;
         
-        private CancellationTokenWrapper() : base() { }
-        public CancellationTokenWrapper(Guid newId) : this()
+
+        private CustomCancellationToken() : base() { }
+        public CustomCancellationToken(Guid newId) : this()
         {
             Id = newId;
         }

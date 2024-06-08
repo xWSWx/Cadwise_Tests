@@ -6,15 +6,66 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ProcessingTextFiles.ViewModels.Controls
 {
+    public enum FileActions
+    {
+        RemoveWordsLessThan,
+        removePunctuation
+    }
     public class FileProcessingViewModel : ReactiveObject
     {
-     
+        FileActions FileAction = FileActions.RemoveWordsLessThan;
+
+        private int _charactersCount = 0;
+        public int CharactersCount
+        {
+            get => _charactersCount;
+            set => this.RaiseAndSetIfChanged(ref _charactersCount, value);
+        }
+
+        private string _filePrefix;
+        public string FilePrefix
+        {
+            get => _filePrefix; 
+            set => this.RaiseAndSetIfChanged(ref _filePrefix, value);
+        }
+        private int _selectedActionIndex = 0;
+        public int SelectedActionIndex
+        {
+            get => _selectedActionIndex;
+            set
+            {
+                //дешёвый кастыль
+                try
+                {
+                    FileAction = (FileActions)value;
+                    if (FileAction == FileActions.RemoveWordsLessThan)
+                    {
+                        IsSizeBoxVisible = Visibility.Visible;
+                    }
+                    else 
+                    {
+                        IsSizeBoxVisible = Visibility.Collapsed;
+                    }
+                }
+                catch { }
+                this.RaiseAndSetIfChanged(ref _selectedActionIndex, value);
+            }
+        }
+
+        private Visibility _isSizeBoxVisible;
+        public Visibility IsSizeBoxVisible
+        {
+            get => _isSizeBoxVisible;
+            set => this.RaiseAndSetIfChanged(ref _isSizeBoxVisible, value);
+        }
 
         public ObservableCollection<FileViewModel> Files { get; } = new ObservableCollection<FileViewModel> { };
 
@@ -31,19 +82,119 @@ namespace ProcessingTextFiles.ViewModels.Controls
             get => _completePercent;
             set => this.RaiseAndSetIfChanged(ref _completePercent, value);
         }
+        private bool _isPlayEnabled = false;
+        public bool IsPlayEnabled 
+        {
+            get => _isPlayEnabled;
+            set => this.RaiseAndSetIfChanged(ref _isPlayEnabled, value);
+        }
+        private bool _isPauseEnabled = false;
+        public bool IsPauseEnabled
+        {
+            get => _isPauseEnabled;
+            set => this.RaiseAndSetIfChanged(ref _isPauseEnabled, value);
+        }
+        private bool _isStopEnabled = false;
+        public bool IsCancelEnabled
+        {
+            get => _isStopEnabled;
+            set => this.RaiseAndSetIfChanged(ref _isStopEnabled, value);
+        }
+        private bool _isSelectEnabled = false;
+        public bool IsSelectEnabled
+        {
+            get => _isSelectEnabled;
+            set => this.RaiseAndSetIfChanged(ref _isSelectEnabled, value);
+        }
+        private bool _isDeleteEnabled = false;
+        public bool IsDeleteEnabled
+        {
+            get => _isDeleteEnabled;
+            set => this.RaiseAndSetIfChanged(ref _isDeleteEnabled, value);
+        }
         public ICommand Delete { get; }
         public ICommand Play { get; }
-        public ICommand Stop { get; }
+        public ICommand Cancel { get; }
         public ICommand Pause { get; }
         public ICommand Select { get; }
 
-        CancellationTokenWrapper cancelToken;
+        CustomCancellationToken cancelToken;
         private Guid id = Guid.NewGuid();
+
         public FileProcessingViewModel() 
         {
-            cancelToken = new CancellationTokenWrapper(id);
+            FilePrefix = "Prefix-" + id.ToString()+".";
+            cancelToken = new CustomCancellationToken(id);
+            SelectedActionIndex = 0;
+            FileProcessor.OnProgress += (x, y) =>
+            {
+                if (y.tokenId != cancelToken.Id)
+                    return;
+                CompletePercents = y.CompletedPercent;
+            };
+            FileProcessor.OnFileDone += (x, y) => 
+            {
+                if (y.id != cancelToken.Id)
+                    return;
+                Files.First(x => x.Path == y.str).IsSelected = true;
+                CurentProcessingText = string.Format(ResourcesNameSpace.Resources.NAMEDFILECOMPLETE, y.str);
+
+            };
+            FileProcessor.OnCancelled += (x, y) =>
+            {
+                if (y.id != cancelToken.Id)
+                    return;
+                IsCancelEnabled = false;
+                IsPauseEnabled = false;
+                IsPlayEnabled = true;
+                IsSelectEnabled = true;
+                CurentProcessingText = ResourcesNameSpace.Resources.CANCELLED;
+            };
+            FileProcessor.OnDone += (x, y) =>
+            {
+                if (y.id != cancelToken.Id)
+                    return;
+                IsCancelEnabled = false;
+                IsPauseEnabled = false;
+                IsPlayEnabled = true;
+                IsSelectEnabled = true;
+                CurentProcessingText = ResourcesNameSpace.Resources.ALLFILESDONE;
+            };
+            FileProcessor.OnPaused += (x, y) =>
+            {
+                if (y.id != cancelToken.Id)
+                    return;
+                CurentProcessingText = ResourcesNameSpace.Resources.PAUSED;
+            };
+            IsSelectEnabled = true;
+            IsDeleteEnabled = true;
             Select = ReactiveCommand.Create(SelectFiles);
-            Play = ReactiveCommand.Create(() => FileProcessor.Start(Files.Select(x => x.Path), cancelToken));
+            Play = ReactiveCommand.Create(() =>
+            {
+                if (CharactersCount == 0 && FileAction == FileActions.RemoveWordsLessThan)
+                {
+                    MessageBox.Show("Please, choose characters count");
+                    return;
+                }
+                if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, FileAction, CharactersCount))
+                {
+                    IsPlayEnabled = false;
+                    IsPauseEnabled = true;
+                    IsCancelEnabled = true;
+                    IsSelectEnabled = false;
+                };
+            });
+            Pause = ReactiveCommand.Create(() => 
+            { 
+                if (cancelToken.Paused) 
+                    cancelToken.Resume(); 
+                else 
+                    cancelToken.Pause();                
+            });
+            Cancel = ReactiveCommand.Create(() => 
+            {
+                cancelToken.Stop();
+            });
 
             CurentProcessingText = "Dummy string";
             CompletePercents = 30;
@@ -73,6 +224,9 @@ namespace ProcessingTextFiles.ViewModels.Controls
                 {
                     Files.Add(new FileViewModel(fileName));
                 }
+
+                IsPlayEnabled = true;
+                
             }
         }
     }

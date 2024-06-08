@@ -11,7 +11,7 @@ namespace ProcessingTextFiles.CustomEvents
         public delegate void GuidEventHandler(object? sender, GuidEventArgs e);
         public class GuidEventArgs : EventArgs
         {
-            Guid id;
+            public Guid id;
             private GuidEventArgs() { }
             public GuidEventArgs(Guid id) : this() 
             {
@@ -22,8 +22,8 @@ namespace ProcessingTextFiles.CustomEvents
         public delegate void ProcessingHandler(object? sender, ProcessingArgs e);
         public class ProcessingArgs : EventArgs
         {
-            Guid tokenId;
-            int CompletedPercent;
+            public Guid tokenId;
+            public int CompletedPercent;
             private ProcessingArgs() { }
             public ProcessingArgs(Guid id, int completedPercent) : this()
             {

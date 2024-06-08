@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessingTextFiles", "ProcessingTextFiles\ProcessingTextFiles.csproj", "{679473D0-24D2-47B1-9A02-CC8F114E526E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProcessingTextFiles", "ProcessingTextFiles\ProcessingTextFiles.csproj", "{679473D0-24D2-47B1-9A02-CC8F114E526E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LargeFileGenerator", "LargeFileGenerator\LargeFileGenerator.csproj", "{3D9D7558-2D80-48FA-AA56-13C141503898}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{679473D0-24D2-47B1-9A02-CC8F114E526E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{679473D0-24D2-47B1-9A02-CC8F114E526E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{679473D0-24D2-47B1-9A02-CC8F114E526E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D9D7558-2D80-48FA-AA56-13C141503898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D9D7558-2D80-48FA-AA56-13C141503898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D9D7558-2D80-48FA-AA56-13C141503898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D9D7558-2D80-48FA-AA56-13C141503898}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

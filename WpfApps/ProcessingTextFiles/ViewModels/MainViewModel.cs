@@ -27,7 +27,7 @@ namespace ProcessingTextFiles.ViewModels
                 new FileProcessingViewModel{ CurentProcessingText = "Some Text For user 3", CompletePercents = 60 }
             };
         }
-
+        public void Clear() => Items.Clear();
         
     }
 }

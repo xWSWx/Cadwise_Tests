@@ -20,7 +20,7 @@
                         Cursor="Hand"
                         CornerRadius="20"
                     >
-                        <ContentControl IsTabStop="False" Content="{TemplateBinding Content}"/>
+                        <ContentControl x:Name="PART_Content" IsTabStop="False" Content="{TemplateBinding Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -30,6 +30,9 @@
                         <Trigger Property="IsMouseOver" Value="false">
                             <Setter TargetName="OuterBorder"  Property="Background" Value="Transparent"></Setter>
                             <Setter TargetName="OuterBorder"  Property="BorderBrush" Value="Transparent"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_Content" Property="Opacity" Value="0.5" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

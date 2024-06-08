@@ -4,26 +4,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ControlsVM="clr-namespace:ProcessingTextFiles.ViewModels.Controls"
+             xmlns:res="clr-namespace:ResourcesNameSpace"
              mc:Ignorable="d" 
              d:DesignHeight="160" d:DesignWidth="500"
              d:DataContext="{d:DesignInstance ControlsVM:FileProcessingViewModel, IsDesignTimeCreatable=True}">
     <DockPanel>
         <DockPanel DockPanel.Dock="Top">
-            <Button DockPanel.Dock="Right" Style="{StaticResource RoundSmallButtonStyle}" VerticalAlignment="Top" Width="20" Height="20" Margin="3">
-                <Image Source="/Assets/Icons/Delete.png" Width="15" Height="15"/>
-            </Button>
-            <Button Command="{Binding Play}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
-                <Image Source="/Assets/Icons/Play.png" Width="40" Height="40"/>
-            </Button>
-            <Button DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
-                <Image Source="/Assets/Icons/Pause.png" Width="40" Height="40"/>
-            </Button>
-            <Button DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
-                <Image Source="/Assets/Icons/Cancel.png" Width="40" Height="40"/>
-            </Button>
-            <Button Command="{Binding Select}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
-                <Image Source="/Assets/Icons/Folder.png" Width="40" Height="40"/>
-            </Button>
+            <DockPanel DockPanel.Dock="Right">
+                <DockPanel DockPanel.Dock="Bottom">
+                    <TextBlock Visibility="{Binding IsSizeBoxVisible}" IsEnabled="{Binding IsPlayEnabled}" DockPanel.Dock="Right" Margin="0,0,3,0">characters</TextBlock>
+                    <TextBox Visibility="{Binding IsSizeBoxVisible}" IsEnabled="{Binding IsPlayEnabled}" DockPanel.Dock="Right" x:Name="SizeBox" Width="40" Margin="3,0,3,0" TextChanged="SizeBox_TextChanged" PreviewTextInput="Size_PreviewTextInput" DataObject.Pasting="SizeBox_Pasting"/>
+                    <ComboBox IsEnabled="{Binding IsPlayEnabled}" SelectedIndex="{Binding SelectedActionIndex}">
+                        <ComboBoxItem IsSelected="True">Remove words less than</ComboBoxItem>
+                        <ComboBoxItem >remove punctuation</ComboBoxItem>
+                    </ComboBox>
+                    
+                </DockPanel>
+                <TextBox DockPanel.Dock="Bottom" Text="{Binding FilePrefix}" Margin="3,0,3,5"/>
+                <Button Command="{Binding Delete}" IsEnabled="{Binding IsDeleteEnabled}" DockPanel.Dock="Right" Style="{StaticResource RoundSmallButtonStyle}" VerticalAlignment="Top" Width="20" Height="20" Margin="3">
+                    <Image Source="/Assets/Icons/Delete.png" Width="15" Height="15"/>
+                </Button>
+                <Button Command="{Binding Play}" IsEnabled="{Binding IsPlayEnabled}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+                    <Image Source="/Assets/Icons/Play.png" Width="40" Height="40"/>
+                </Button>
+                <Button Command="{Binding Pause}" IsEnabled="{Binding IsPauseEnabled}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+                    <Image Source="/Assets/Icons/Pause.png" Width="40" Height="40"/>
+                </Button>
+                <Button Command="{Binding Cancel}" IsEnabled="{Binding IsCancelEnabled}" DockPanel.Dock="Right"  Style="{StaticResource RoundButtonStyle}">
+                    <Image Source="/Assets/Icons/Cancel.png" Width="40" Height="40"/>
+                </Button>
+                <Button Command="{Binding Select}" IsEnabled="{Binding IsSelectEnabled}" DockPanel.Dock="Right" Style="{StaticResource RoundButtonStyle}">
+                    <Image Source="/Assets/Icons/Folder.png" Width="40" Height="40"/>
+                </Button>
+            </DockPanel>
             <ListView DockPanel.Dock="Left" Margin="3" Height="115" ItemsSource="{Binding Files}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -33,6 +46,8 @@
             </ListView>
         </DockPanel>
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding CurentProcessingText}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="5,0,5,0"/>
-        <ProgressBar DockPanel.Dock="Bottom" x:Name="progressBar" Value="{Binding CompletePercents, Mode=OneWay}" Height="30" VerticalAlignment="Top" Margin="10,5,10,0" Minimum="0" Maximum="100" />
+        <ProgressBar DockPanel.Dock="Bottom" x:Name="progressBar" Value="{Binding CompletePercents, Mode=OneWay}" Height="20" VerticalAlignment="Top" Margin="10,5,10,0" Minimum="0" Maximum="100" >
+            
+        </ProgressBar>
     </DockPanel>
 </UserControl>

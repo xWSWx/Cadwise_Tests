@@ -21,6 +21,10 @@ namespace ProcessingTextFiles
         public MainWindow()
         {
             InitializeComponent();
+            this.Initialized += (x, y) => 
+            { 
+                ViewModel?.Clear(); 
+            };
         }
         public MainViewModel? ViewModel
         {
