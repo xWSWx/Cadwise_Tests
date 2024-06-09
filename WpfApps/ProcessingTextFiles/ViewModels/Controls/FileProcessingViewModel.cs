@@ -120,6 +120,8 @@ namespace ProcessingTextFiles.ViewModels.Controls
         public ICommand Select { get; }
 
         CustomCancellationToken cancelToken;
+        //TODO: закрыть от редактирования. Отправлять копию. Публичный доступ вообще для тестов только
+        public CustomCancellationToken CancelToken => cancelToken;
         private Guid id = Guid.NewGuid();
 
         public FileProcessingViewModel() 

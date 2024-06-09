@@ -157,7 +157,7 @@ namespace ProcessingTextFiles.FileProcessing
             OnDone?.Invoke(null, new(token.Id));
         }
 
-        private static string GetOutputFileName(string inputFilePath, string prefix)
+        public static string GetOutputFileName(string inputFilePath, string prefix)
         {
             try
             {
@@ -167,7 +167,7 @@ namespace ProcessingTextFiles.FileProcessing
                 return Path.Combine(directory, $"{prefix}{fileNameWithoutExtension}{extension}");
             }catch(Exception ex) { return string.Empty; }
         }
-        private static int RemovePunctuation(byte[] indata, out byte[] outdata)
+        public static int RemovePunctuation(byte[] indata, out byte[] outdata)
         {
 
             var chars = Encoding.UTF8.GetChars(indata);
@@ -186,7 +186,7 @@ namespace ProcessingTextFiles.FileProcessing
             return outdata.Length;
         }
 
-        private static int RemoveShortWords(byte[] indata, int shouldLessWordLength, out byte[] outdata, ref byte[] unknownPart, ref int unknownPartLength)
+        public static int RemoveShortWords(byte[] indata, int shouldLessWordLength, out byte[] outdata, ref byte[] unknownPart, ref int unknownPartLength)
         {
             var chars = Encoding.UTF8.GetChars(indata);
             var unknownPartChars = Encoding.UTF8.GetChars(unknownPart);
@@ -240,10 +240,9 @@ namespace ProcessingTextFiles.FileProcessing
                     var isLittleWord = wordAccumulator.Length < shouldLessWordLength;
                     if (isLittleWord)
                     {
-                        wordAccumulator.Clear();
-                        continue;                    
+                        wordAccumulator.Clear();                           
                     }
-                    textAccumulator.Append(c);                                        
+                    textAccumulator.Append(c);
                 }
             }
             unknownPartLength = wordAccumulator.Length;

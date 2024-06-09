@@ -21,7 +21,10 @@ namespace ProcessingTextFiles.Wrappers
         public void Start () => Started = true;
         
 
-        private CustomCancellationToken() : base() { }
+        public CustomCancellationToken() : base() 
+        {
+            Id = Guid.Empty;
+        }
         public CustomCancellationToken(Guid newId) : this()
         {
             Id = newId;
