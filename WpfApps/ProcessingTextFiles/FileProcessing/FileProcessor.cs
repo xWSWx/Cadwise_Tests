@@ -147,6 +147,10 @@ namespace ProcessingTextFiles.FileProcessing
                 {
                     Console.WriteLine($"{ex.Message}");
                     OnError?.Invoke(null, new (inputFilePath, token.Id));
+                    ////////////////
+                    //// Кастыль на тему... чтобы не было OnDone елcи единственный был с ошибкой.
+                    if (pathes.Count() == 1)
+                        return;
                 }
 
             }

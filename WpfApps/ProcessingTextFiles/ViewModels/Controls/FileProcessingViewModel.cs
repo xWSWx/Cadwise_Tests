@@ -21,6 +21,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
     }
     public class FileProcessingViewModel : ReactiveObject
     {
+        public event EventHandler OnDelete;
         FileActions FileAction = FileActions.RemoveWordsLessThan;
 
         private int _charactersCount = 0;
@@ -176,6 +177,11 @@ namespace ProcessingTextFiles.ViewModels.Controls
                     MessageBox.Show("Please, choose characters count");
                     return;
                 }
+                if (FilePrefix == String.Empty)
+                {
+                    MessageBox.Show("Prefix shuld be not empty string");
+                    return;
+                }
                 if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, FileAction, CharactersCount))
                 {
                     IsPlayEnabled = false;
@@ -195,6 +201,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
             {
                 cancelToken.Stop();
             });
+            Delete = ReactiveCommand.Create(() => OnDelete?.Invoke(this, EventArgs.Empty));
 
             CurentProcessingText = "Dummy string";
             CompletePercents = 30;
@@ -205,6 +212,13 @@ namespace ProcessingTextFiles.ViewModels.Controls
                 new(@"C:\Path\To\File2.txt"),
                 new(@"C:\Path\To\File3.txt")
             };
+        }
+        public void Clear() 
+        {
+            Files.Clear();
+            CompletePercents = 0;
+            
+            CurentProcessingText = ResourcesNameSpace.Resources.LETUCHOOSEFILES;
         }
         void SelectFiles()
         {
@@ -229,5 +243,6 @@ namespace ProcessingTextFiles.ViewModels.Controls
                 
             }
         }
+
     }
 }

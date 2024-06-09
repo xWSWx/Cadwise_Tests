@@ -21,10 +21,6 @@ namespace ProcessingTextFiles
         public MainWindow()
         {
             InitializeComponent();
-            this.Initialized += (x, y) => 
-            { 
-                ViewModel?.Clear(); 
-            };
         }
         public MainViewModel? ViewModel
         {
@@ -36,6 +32,11 @@ namespace ProcessingTextFiles
         {
             get => ViewModel;
             set => ViewModel = (MainViewModel?)value;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {            
+            ViewModel?.Clear();            
         }
     }
 }

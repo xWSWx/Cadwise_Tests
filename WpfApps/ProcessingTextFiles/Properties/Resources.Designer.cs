@@ -79,6 +79,15 @@ namespace ResourcesNameSpace {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Let you choose files.
+        /// </summary>
+        internal static string LETUCHOOSEFILES {
+            get {
+                return ResourceManager.GetString("LETUCHOOSEFILES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Processing of {0} complete.
         /// </summary>
         internal static string NAMEDFILECOMPLETE {

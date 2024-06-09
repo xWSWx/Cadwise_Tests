@@ -15,10 +15,15 @@ namespace ProcessingTextFiles.ViewModels
     {
 
         public ObservableCollection<FileProcessingViewModel> Items { get; }
-
+        public ICommand Add { get; }
         public MainViewModel()
         {
-            
+            Add = ReactiveCommand.Create(() => 
+            {
+                FileProcessingViewModel item = new();
+                item.OnDelete += Item_OnDelete;
+                Items?.Add(item);
+             });
 
             Items = new ObservableCollection<FileProcessingViewModel>
             {
@@ -27,6 +32,15 @@ namespace ProcessingTextFiles.ViewModels
                 new FileProcessingViewModel{ CurentProcessingText = "Some Text For user 3", CompletePercents = 60 }
             };
         }
+
+        private void Item_OnDelete(object? sender, EventArgs e)
+        {
+            if (sender is  FileProcessingViewModel item) 
+            {
+                Items.Remove(item);
+            }
+        }
+
         public void Clear() => Items.Clear();
         
     }

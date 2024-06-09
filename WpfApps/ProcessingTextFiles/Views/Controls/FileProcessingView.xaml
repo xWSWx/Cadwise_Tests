@@ -6,6 +6,7 @@
              xmlns:ControlsVM="clr-namespace:ProcessingTextFiles.ViewModels.Controls"
              xmlns:res="clr-namespace:ResourcesNameSpace"
              mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
              d:DesignHeight="160" d:DesignWidth="500"
              d:DataContext="{d:DesignInstance ControlsVM:FileProcessingViewModel, IsDesignTimeCreatable=True}">
     <DockPanel>

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\Add.png" />
     <None Remove="Assets\Icons\Cancel.png" />
     <None Remove="Assets\Icons\Delete.png" />
     <None Remove="Assets\Icons\Folder.png" />
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Icons\Add.png" />
     <Resource Include="Assets\Icons\Cancel.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

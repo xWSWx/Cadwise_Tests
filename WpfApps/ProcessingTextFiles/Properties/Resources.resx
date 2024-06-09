@@ -123,6 +123,9 @@
   <data name="CANCELLED" xml:space="preserve">
     <value>Cancelled</value>
   </data>
+  <data name="LETUCHOOSEFILES" xml:space="preserve">
+    <value>Let you choose files</value>
+  </data>
   <data name="NAMEDFILECOMPLETE" xml:space="preserve">
     <value>Processing of {0} complete</value>
   </data>
