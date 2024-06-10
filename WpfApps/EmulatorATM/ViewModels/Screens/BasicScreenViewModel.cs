@@ -10,5 +10,6 @@ namespace EmulatorATM.ViewModels.Screens
     public class BasicScreenViewModel : ReactiveObject
     {
         public BasicScreenViewModel() { }
+        public virtual void Clear() { }
     }
 }

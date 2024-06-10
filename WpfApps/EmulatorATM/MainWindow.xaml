@@ -21,7 +21,7 @@
                 <TextBlock Margin="3">Card On Hand</TextBlock>
                 <TextBlock HorizontalAlignment="Right" Margin="3">Inserted Card</TextBlock>
             </Grid>
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <StackPanel IsEnabled="{Binding IsInsertCardActionEnable}" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                 <Button Command="{Binding TryInserdCard}" CommandParameter="{Binding CardViewModelFirst}">
                     <ViewsControls:CardView DataContext="{Binding CardViewModelFirst}" Margin="5"
                                 d:DataContext="{d:DesignInstance Type=ViewModelsControls:CardViewModel, IsDesignTimeCreatable=True}">
@@ -60,10 +60,7 @@
             <Button Style="{StaticResource AtmDialButtonStyle}" Grid.Column="5" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,50"/>
             <Border Grid.Column="3" CornerRadius="30" BorderBrush="{StaticResource GrayBackGround}" BorderThickness="10">
                 <Grid>
-                    <Views:ScreenView DataContext="{Binding ScreenVM}" />
-                    
-                    <ContentControl Content="{Binding ScreenVM}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}" Margin="112,169,289,249"/>
-                    <ContentControl Content="{Binding DefaultScreenViewModel}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}" Margin="300,249,101,169"/>
+                    <ContentControl Content="{Binding CurrentPage}" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}" />
                 </Grid>
             </Border>
         </Grid>

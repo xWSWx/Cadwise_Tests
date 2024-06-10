@@ -18,24 +18,24 @@ using System.Windows.Shapes;
 namespace EmulatorATM.Views.Screens
 {
     /// <summary>
-    /// Логика взаимодействия для EnterPinView.xaml
+    /// Логика взаимодействия для CardSelectActionsView.xaml
     /// </summary>
-    public partial class EnterPinView : UserControl, IViewFor<EnterPinViewModel>
+    public partial class SelectCardOptionView: UserControl, IViewFor<SelectCardOptionViewModel>
     {
-        public EnterPinView()
+        public SelectCardOptionView()
         {
             InitializeComponent();
         }
-        public EnterPinViewModel ViewModel
+        public SelectCardOptionViewModel ViewModel
         {
-            get => (EnterPinViewModel)DataContext;
+            get => (SelectCardOptionViewModel)DataContext;
             set => DataContext = value;
         }
 
         object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (EnterPinViewModel)value;
+            set => ViewModel = (SelectCardOptionViewModel)value;
         }
     }
 }

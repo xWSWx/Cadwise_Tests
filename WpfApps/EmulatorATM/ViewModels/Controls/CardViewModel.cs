@@ -13,6 +13,22 @@ namespace EmulatorATM.ViewModels.Controls
         private Guid cardId;
         private Guid cardSecret;
         private char[] pin = new char[4] {'0','0','0','0'};
+        public char[] Pin
+        {
+            get => pin;
+            set 
+            {
+                PinString = new string(value);
+                this.RaiseAndSetIfChanged(ref pin, value); 
+            }
+        }
+        private string _pinString;
+        public string PinString
+        {
+            get => _pinString;
+            set => this.RaiseAndSetIfChanged(ref  _pinString, value);
+        }
+        public char[] GetPIN() => pin;
         private string _cardNumber;
         public string CardNumber 
         {
@@ -38,8 +54,16 @@ namespace EmulatorATM.ViewModels.Controls
             get => _adminCardTextVisibility;
             private set => this.RaiseAndSetIfChanged(ref _adminCardTextVisibility, value);
         }
+
+        private double _balance;
+        public double Balance 
+        {
+            get => _balance;
+            set => this.RaiseAndSetIfChanged(ref _balance, value);
+        }
         public CardViewModel() 
         {
+            Pin = new char[4] { '0', '0', '0', '0' };
             cardId = Guid.NewGuid();
             cardSecret = Guid.NewGuid();
             CardNumber = String.Format("{0}  {1}  {2}  {3}",
@@ -52,6 +76,7 @@ namespace EmulatorATM.ViewModels.Controls
         public CardViewModel(bool IsAdmin) : this() 
         {
             IsAdminCard = IsAdmin;
+            Balance = 200000.00;
         }
     }
 }

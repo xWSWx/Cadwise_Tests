@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="EmulatorATM.Views.Screens.SelectCardOptionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EmulatorATM.Views.Screens"
+             xmlns:ViewModelsScreens="clr-namespace:EmulatorATM.ViewModels.Screens"
+             d:DataContext="{d:DesignInstance Type=ViewModelsScreens:SelectCardOptionViewModel, IsDesignTimeCreatable=True}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="450">
+    <Grid>
+        <Image  Stretch="Uniform" Source="/Assets/ScreenBackGrounds/SelectOptionScreenBackground.png"/>
+        <TextBlock FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0">Current Balance is</TextBlock>
+        <TextBlock Text="{Binding BalanceString}" FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"></TextBlock>
+        <TextBlock FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Select Option</TextBlock>
+        <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Red" StrokeThickness="6" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding Back}" Grid.Column="1" VerticalAlignment="Bottom" Height="50" Style="{StaticResource AtmDialButtonStyle}" Margin="0,0,0,50">
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">Exit</TextBlock>
+            </Button>
+            <Button Grid.Column="1" VerticalAlignment="Center" Height="50" Style="{StaticResource AtmDialButtonStyle}" >
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">Withdraw</TextBlock>
+            </Button>
+            <Button Grid.Column="3" VerticalAlignment="Center" Height="50" Style="{StaticResource AtmDialButtonStyle}">
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">Deposit cash</TextBlock>
+            </Button>
+            
+        </Grid>
+    </Grid>
+</UserControl>

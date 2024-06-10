@@ -24,8 +24,11 @@ namespace EmulatorATM
             Locator.CurrentMutable.RegisterLazySingleton(() => new ViewLocator(), typeof(IViewLocator));
             Locator.CurrentMutable.Register(() => new CardView(), typeof(IViewFor<CardViewModel>));
             Locator.CurrentMutable.Register(() => new DialView(), typeof(IViewFor<DialViewModel>));
-            Locator.CurrentMutable.Register(() => new DefaultScreenView(), typeof(IViewFor<DefaultScreenViewModel>));
             Locator.CurrentMutable.Register(() => new ScreenView(), typeof(IViewFor<ScreenViewModel>));
+            Locator.CurrentMutable.Register(() => new DefaultScreenView(), typeof(IViewFor<DefaultScreenViewModel>));
+            Locator.CurrentMutable.Register(() => new EnterPinView(), typeof(IViewFor<EnterPinViewModel>));
+            Locator.CurrentMutable.Register(() => new SelectCardOptionView(), typeof(IViewFor<SelectCardOptionViewModel>));
+            
 
 
 

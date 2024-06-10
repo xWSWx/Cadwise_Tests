@@ -16,6 +16,7 @@
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding CardNumber}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,10,10"></TextBlock>
         <TextBlock DockPanel.Dock="Bottom" Visibility="{Binding AdminCardTextVisibility}" Text="IS ADMIN CARD" FontSize="10" Foreground="HotPink" HorizontalAlignment="Center"> </TextBlock>
         <Image DockPanel.Dock="Right" Source="/Assets/Icons/PaymentSystemLogo.png" Width="40" Height="30" VerticalAlignment="Top"/>
+        <TextBlock DockPanel.Dock="Right" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding PinString}"></TextBlock>
         <Image DockPanel.Dock="Right" Source="/Assets/Icons/BankLogo.png" Width="40" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"/>
     </DockPanel>
 </UserControl>

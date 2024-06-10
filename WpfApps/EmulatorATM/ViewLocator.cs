@@ -21,7 +21,9 @@ namespace EmulatorATM
             { typeof(DialViewModel), typeof(IViewFor<DialViewModel>) },
             { typeof(ScreenViewModel), typeof(IViewFor<ScreenViewModel>) },
             { typeof(DefaultScreenViewModel), typeof(IViewFor<DefaultScreenViewModel>) },
-            { typeof(BasicScreenViewModel), typeof(IViewFor<BasicScreenViewModel>) }
+            { typeof(BasicScreenViewModel), typeof(IViewFor<BasicScreenViewModel>) },
+            { typeof(EnterPinViewModel), typeof(IViewFor<EnterPinViewModel>) },
+            { typeof(SelectCardOptionViewModel), typeof(IViewFor<SelectCardOptionViewModel>) }
             
             //{ typeof(FileViewModel), typeof(IViewFor<FileViewModel>) }
         };

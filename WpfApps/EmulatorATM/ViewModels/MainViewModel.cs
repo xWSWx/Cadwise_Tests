@@ -11,12 +11,32 @@ using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace EmulatorATM.ViewModels
 {
     public class MainViewModel : ReactiveObject
     {
+        Dictionary<ePages, BasicScreenViewModel> Pages = new();
+        EnterPinViewModel PinPage = new EnterPinViewModel();
+        DefaultScreenViewModel GreetingsPage = new DefaultScreenViewModel();
+        SelectCardOptionViewModel SelectOptionPage = new SelectCardOptionViewModel();
+        public enum ePages
+        {
+            Greetings, PIN, SelectOption
+        }
+        private ePages _curPage;
+        public ePages CurPage 
+        {
+            get => _curPage;
+            set 
+            {
+                CurrentPage = Pages[value];
+                this.RaiseAndSetIfChanged(ref _curPage, value); 
+            }
+        }
+
         private CardViewModel _cardViewModelFirst;
         public CardViewModel CardViewModelFirst
         {
@@ -39,8 +59,20 @@ namespace EmulatorATM.ViewModels
         private CardViewModel? _selectedCard;
         public CardViewModel? SelectedCard
         {
-            get => _selectedCard; 
-            set => this.RaiseAndSetIfChanged(ref _selectedCard, value);
+            get => _selectedCard;
+            set 
+            {
+                if (value != null)
+                {
+                    IsInsertCardActionEnable = false;
+                    CurPage = ePages.PIN;
+                }
+                if (value == null)
+                {
+                    IsInsertCardActionEnable = true;
+                }
+                this.RaiseAndSetIfChanged(ref _selectedCard, value); 
+            }
         }
         private DialViewModel _dialViewModel;
         public DialViewModel DialViewModel
@@ -50,21 +82,40 @@ namespace EmulatorATM.ViewModels
         }
 
         public ReactiveCommand<CardViewModel, Unit> TryInserdCard { get; }
+        
 
-        private BasicScreenViewModel _screenVM;
-        public BasicScreenViewModel ScreenVM 
+        private BasicScreenViewModel _currentPage;
+        public BasicScreenViewModel CurrentPage 
         {
-            get => _screenVM;
-            set => this.RaiseAndSetIfChanged(ref _screenVM, value);
+            get => _currentPage;
+            set 
+            {
+                if (value != null)
+                {
+                    value.Clear();
+                }
+                if (value == GreetingsPage)
+                {
+                    SelectedCard = null;
+                }
+                if (value == SelectOptionPage)
+                {
+                    SelectOptionPage.LoadCard(SelectedCard);
+                }
+                this.RaiseAndSetIfChanged(ref _currentPage, value); 
+            }
         }
-        private DefaultScreenViewModel _defaultScreenViewModel;
-        public DefaultScreenViewModel DefaultScreenViewModel
+        private bool _isInsertCardActionEnable;
+        public bool IsInsertCardActionEnable
         {
-            get => _defaultScreenViewModel;
-            set => this.RaiseAndSetIfChanged(ref _defaultScreenViewModel, value);
+            get => _isInsertCardActionEnable;
+            set => this.RaiseAndSetIfChanged(ref _isInsertCardActionEnable, value);
         }
         public MainViewModel()
         {
+            Pages.Add(ePages.PIN, PinPage);
+            Pages.Add(ePages.Greetings, GreetingsPage);
+            Pages.Add(ePages.SelectOption, SelectOptionPage);
             //CardNumber = string.Format("{0}  {1}  {2}  {3}", ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4))
             CardViewModelFirst = new CardViewModel(IsAdmin: false);
             CardViewModelSecond = new CardViewModel(IsAdmin: false);
@@ -83,8 +134,11 @@ namespace EmulatorATM.ViewModels
                 }
             });
 
-            ScreenVM = new DefaultScreenViewModel();
-            DefaultScreenViewModel = new DefaultScreenViewModel();
+            //CurrentPage = new DefaultScreenViewModel();
+            CurPage = ePages.Greetings;
+            IsInsertCardActionEnable = true;
+
+            SelectOptionPage.OnBack += OptionsPage_OnBack;
         }
         public void ClearAfterStart() 
         {
@@ -92,7 +146,74 @@ namespace EmulatorATM.ViewModels
         }
         private void DialViewModel_OnButtonPressed(object? sender, CustomEvents.CustomEventHandlers.DialButtonsEventArgs e)
         {
-            ;
+
+            /////////////
+            //// О боже... но у меня сейчас нет времени выстраивать красивую архитектуру обработки циферблата в зависимости от состояния системы..
+            //// поэтому будут тупые switch case, простите
+
+            switch (CurPage)
+            {
+                case ePages.PIN:
+                    switch (e.btn)
+                    {
+                        case DialButtons.Zero:
+                            PinPage.AddNumber('0');
+                            break;
+                        case DialButtons.One:
+                            PinPage.AddNumber('1');
+                            break;
+                        case DialButtons.Two:
+                            PinPage.AddNumber('2');
+                            break;
+                        case DialButtons.Three:
+                            PinPage.AddNumber('3');
+                            break;
+                        case DialButtons.Four:
+                            PinPage.AddNumber('4');
+                            break;
+                        case DialButtons.Five:
+                            PinPage.AddNumber('5');
+                            break;
+                        case DialButtons.Six:
+                            PinPage.AddNumber('6');
+                            break;
+                        case DialButtons.Seven:
+                            PinPage.AddNumber('7');
+                            break;
+                        case DialButtons.Eight:
+                            PinPage.AddNumber('0');
+                            break;
+                        case DialButtons.Nine:
+                            PinPage.AddNumber('0');
+                            break;
+                        case DialButtons.Clear:
+                            PinPage.RemoveNumber();
+                            break;
+                        case DialButtons.Enter:
+                            if (PinPage.PIN != SelectedCard?.PinString)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Ну да.. забыл логи присоеденить.. Не верный пин!!!");
+                                Console.WriteLine("Ну да.. забыл логи присоеденить.. Не верный пин!!!");
+                            }
+                            else                             
+                            {
+                                CurPage = ePages.SelectOption;
+                            }
+                            break;
+                        case DialButtons.Cancel:
+                            CurPage = ePages.Greetings;
+                            break;
+
+                    }
+                    break;
+            }
+            
+
+            
+        }
+        private void OptionsPage_OnBack(object? sender, EventArgs e) 
+        {
+            CurPage=ePages.Greetings;
         }
     }
 }
