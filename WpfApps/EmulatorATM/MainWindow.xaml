@@ -4,9 +4,68 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmulatorATM"
+        xmlns:ViewModels="clr-namespace:EmulatorATM.ViewModels"
+        xmlns:ViewModelsControls="clr-namespace:EmulatorATM.ViewModels.Controls"
+        xmlns:ViewsControls="clr-namespace:EmulatorATM.Views.Controls"
+        xmlns:Views="clr-namespace:EmulatorATM.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Loaded="Window_Loaded"
+        d:DataContext="{d:DesignInstance Type=ViewModels:MainViewModel, IsDesignTimeCreatable=True}"   
+        Title="MainWindow" Height="800" Width="800">
+    <Window.DataContext>
+        <ViewModels:MainViewModel />
+    </Window.DataContext>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Grid >
+                <TextBlock Margin="3">Card On Hand</TextBlock>
+                <TextBlock HorizontalAlignment="Right" Margin="3">Inserted Card</TextBlock>
+            </Grid>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Button Command="{Binding TryInserdCard}" CommandParameter="{Binding CardViewModelFirst}">
+                    <ViewsControls:CardView DataContext="{Binding CardViewModelFirst}" Margin="5"
+                                d:DataContext="{d:DesignInstance Type=ViewModelsControls:CardViewModel, IsDesignTimeCreatable=True}">
+                    </ViewsControls:CardView>
+                </Button>
+                <Button Command="{Binding TryInserdCard}" CommandParameter="{Binding CardViewModelSecond}">
+                    <ViewsControls:CardView DataContext="{Binding CardViewModelSecond}" Margin="5" 
+                            d:DataContext="{d:DesignInstance Type=ViewModelsControls:CardViewModel, IsDesignTimeCreatable=True}">
+                    </ViewsControls:CardView>
+                </Button>
+                <Button Command="{Binding TryInserdCard}" CommandParameter="{Binding CardViewModelAdmin}">
+                    <ViewsControls:CardView DataContext="{Binding CardViewModelAdmin}" Margin="5"
+                            d:DataContext="{d:DesignInstance Type=ViewModelsControls:CardViewModel, IsDesignTimeCreatable=True}">
+                    </ViewsControls:CardView>
+                </Button>
+                <Line X1="1" Y1="1" X2="1" Y2="90" Stroke="Black" StrokeThickness="3"/>
+                <ContentControl Content="{Binding SelectedCard}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
+            </StackPanel>
+        </StackPanel>
+        <ViewsControls:DialView DataContext="{Binding DialViewModel}" DockPanel.Dock="Bottom" Width="290" Height="150" VerticalAlignment="Bottom" HorizontalAlignment="Center"></ViewsControls:DialView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource AtmDialButtonStyle}" Grid.Column="1" Height="50" VerticalAlignment="Top" Margin="0,50,0,0"/>
+            <Button Style="{StaticResource AtmDialButtonStyle}" Grid.Column="1" Height="50" VerticalAlignment="Center" />
+            <Button Style="{StaticResource AtmDialButtonStyle}" Grid.Column="1" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,50"/>
+            <Button Style="{StaticResource AtmDialButtonStyle}" Grid.Column="5" Height="50" VerticalAlignment="Top" Margin="0,50,0,0"/>
+            <Button Style="{StaticResource AtmDialButtonStyle}" Grid.Column="5" Height="50" VerticalAlignment="Center" />
+            <Button Style="{StaticResource AtmDialButtonStyle}" Grid.Column="5" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,50"/>
+            <Border Grid.Column="3" CornerRadius="30" BorderBrush="{StaticResource GrayBackGround}" BorderThickness="10">
+                <Grid>
+                    <Views:ScreenView DataContext="{Binding ScreenVM}" />
+                    <ContentControl Content="{Binding SelectedCard}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
+                    <ContentControl Content="{Binding ScreenVM}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
+                    <ContentControl Content="{Binding DefaultScreenViewModel}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </DockPanel>
 </Window>

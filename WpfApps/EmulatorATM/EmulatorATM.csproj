@@ -9,12 +9,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Icons\BankLogo.png" />
+    <None Remove="Assets\Icons\PaymentSystemLogo.png" />
+    <None Remove="Assets\ScreenBackGrounds\DefaultScreenBackground.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="ReactiveUI" Version="20.1.1" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="ReactiveUI.WPF" Version="20.1.1" />
     <PackageReference Include="Splat" Version="15.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\BankLogo.png" />
+    <Resource Include="Assets\Icons\PaymentSystemLogo.png" />
+    <Resource Include="Assets\ScreenBackGrounds\DefaultScreenBackground.png" />
   </ItemGroup>
 
 </Project>

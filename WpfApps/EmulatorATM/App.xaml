@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:EmulatorATM"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <local:ViewModelDataTemplateSelector x:Key="ViewModelTemplateSelector"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

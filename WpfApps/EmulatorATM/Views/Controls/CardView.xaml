@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="EmulatorATM.Views.Controls.CardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ControlsVM="clr-namespace:EmulatorATM.ViewModels.Controls"
+             xmlns:local="clr-namespace:EmulatorATM"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance ControlsVM:CardViewModel, IsDesignTimeCreatable=True}"
+             d:DesignWidth="150"
+             d:DesignHeight="80" 
+             Width="150"
+             Height="80"
+             >
+    <DockPanel Background="{StaticResource GrayBackGround}">
+        <TextBlock DockPanel.Dock="Bottom" Text="{Binding CardNumber}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,0,10,10"></TextBlock>
+        <TextBlock DockPanel.Dock="Bottom" Visibility="{Binding AdminCardTextVisibility}" Text="IS ADMIN CARD" FontSize="10" Foreground="HotPink" HorizontalAlignment="Center"> </TextBlock>
+        <Image DockPanel.Dock="Right" Source="/Assets/Icons/PaymentSystemLogo.png" Width="40" Height="30" VerticalAlignment="Top"/>
+        <Image DockPanel.Dock="Right" Source="/Assets/Icons/BankLogo.png" Width="40" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+    </DockPanel>
+</UserControl>

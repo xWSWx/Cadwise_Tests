@@ -1,7 +1,11 @@
 ﻿using EmulatorATM.ViewModels;
-using EmulatorATM.ViewModels.Controls;
+using EmulatorATM.ViewModels.Screens;
 using ReactiveUI;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,34 +16,27 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace EmulatorATM
+namespace EmulatorATM.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для ScreenView.xaml
     /// </summary>
-    public partial class MainWindow : Window, IViewFor<MainViewModel>
+    public partial class ScreenView : UserControl, IViewFor<ScreenViewModel>
     {
-
-        public MainWindow()
+        public ScreenView()
         {
             InitializeComponent();
-
         }
-        public MainViewModel? ViewModel
+        public ScreenViewModel ViewModel
         {
-            get => (MainViewModel)DataContext;
+            get => (ScreenViewModel)DataContext;
             set => DataContext = value;
         }
 
-        object? IViewFor.ViewModel
+        object IViewFor.ViewModel
         {
             get => ViewModel;
-            set => ViewModel = (MainViewModel?)value;
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ViewModel?.ClearAfterStart();
+            set => ViewModel = (ScreenViewModel)value;
         }
     }
 }
