@@ -61,9 +61,9 @@
             <Border Grid.Column="3" CornerRadius="30" BorderBrush="{StaticResource GrayBackGround}" BorderThickness="10">
                 <Grid>
                     <Views:ScreenView DataContext="{Binding ScreenVM}" />
-                    <ContentControl Content="{Binding SelectedCard}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
-                    <ContentControl Content="{Binding ScreenVM}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
-                    <ContentControl Content="{Binding DefaultScreenViewModel}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}"/>
+                    
+                    <ContentControl Content="{Binding ScreenVM}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}" Margin="112,169,289,249"/>
+                    <ContentControl Content="{Binding DefaultScreenViewModel}" Width="150" Height="80" ContentTemplateSelector="{StaticResource ViewModelTemplateSelector}" Margin="300,249,101,169"/>
                 </Grid>
             </Border>
         </Grid>

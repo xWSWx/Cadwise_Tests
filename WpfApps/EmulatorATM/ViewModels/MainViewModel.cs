@@ -51,8 +51,8 @@ namespace EmulatorATM.ViewModels
 
         public ReactiveCommand<CardViewModel, Unit> TryInserdCard { get; }
 
-        private ScreenViewModel _screenVM;
-        public ScreenViewModel ScreenVM 
+        private BasicScreenViewModel _screenVM;
+        public BasicScreenViewModel ScreenVM 
         {
             get => _screenVM;
             set => this.RaiseAndSetIfChanged(ref _screenVM, value);
@@ -83,7 +83,7 @@ namespace EmulatorATM.ViewModels
                 }
             });
 
-            ScreenVM = new ScreenViewModel();
+            ScreenVM = new DefaultScreenViewModel();
             DefaultScreenViewModel = new DefaultScreenViewModel();
         }
         public void ClearAfterStart() 
