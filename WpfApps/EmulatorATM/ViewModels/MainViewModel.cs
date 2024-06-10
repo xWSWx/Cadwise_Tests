@@ -117,8 +117,8 @@ namespace EmulatorATM.ViewModels
             Pages.Add(ePages.Greetings, GreetingsPage);
             Pages.Add(ePages.SelectOption, SelectOptionPage);
             //CardNumber = string.Format("{0}  {1}  {2}  {3}", ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4))
-            CardViewModelFirst = new CardViewModel(IsAdmin: false);
-            CardViewModelSecond = new CardViewModel(IsAdmin: false);
+            CardViewModelFirst = new CardViewModel(IsAdmin: false) { Balance = 100000 };
+            CardViewModelSecond = new CardViewModel(IsAdmin: false) { Balance= 22312 };
             CardViewModelAdmin = new CardViewModel(IsAdmin: true);
 
             DialViewModel = new ();
