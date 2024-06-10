@@ -23,8 +23,8 @@ namespace EmulatorATM
             { typeof(DefaultScreenViewModel), typeof(IViewFor<DefaultScreenViewModel>) },
             { typeof(BasicScreenViewModel), typeof(IViewFor<BasicScreenViewModel>) },
             { typeof(EnterPinViewModel), typeof(IViewFor<EnterPinViewModel>) },
-            { typeof(SelectCardOptionViewModel), typeof(IViewFor<SelectCardOptionViewModel>) }
-            
+            { typeof(SelectCardOptionViewModel), typeof(IViewFor<SelectCardOptionViewModel>) },
+            { typeof(DenominationBalanceItemViewModel), typeof(IViewFor<DenominationBalanceItemViewModel>) },
             //{ typeof(FileViewModel), typeof(IViewFor<FileViewModel>) }
         };
         public IViewFor? ResolveView<T>(T? viewModel, string? contract = null)

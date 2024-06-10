@@ -181,10 +181,10 @@ namespace EmulatorATM.ViewModels
                             PinPage.AddNumber('7');
                             break;
                         case DialButtons.Eight:
-                            PinPage.AddNumber('0');
+                            PinPage.AddNumber('8');
                             break;
                         case DialButtons.Nine:
-                            PinPage.AddNumber('0');
+                            PinPage.AddNumber('9');
                             break;
                         case DialButtons.Clear:
                             PinPage.RemoveNumber();
