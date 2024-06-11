@@ -30,6 +30,8 @@ namespace EmulatorATM
             Locator.CurrentMutable.Register(() => new SelectCardOptionView(), typeof(IViewFor<SelectCardOptionViewModel>));
             Locator.CurrentMutable.Register(() => new DenominationBalanceItemView(), typeof(IViewFor<DenominationBalanceItemViewModel>));
             Locator.CurrentMutable.Register(() => new DepositCashView(), typeof(IViewFor<DepositCashViewModel>));
+            Locator.CurrentMutable.Register(() => new CashWithdrawalView(), typeof(IViewFor<CashWithdrawalViewModel>));
+            
 
 
 

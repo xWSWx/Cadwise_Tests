@@ -26,7 +26,9 @@ namespace EmulatorATM
             { typeof(SelectCardOptionViewModel), typeof(IViewFor<SelectCardOptionViewModel>) },
             { typeof(DenominationBalanceItemViewModel), typeof(IViewFor<DenominationBalanceItemViewModel>) },
             { typeof(DepositCashViewModel), typeof(IViewFor<DepositCashViewModel>) },
-            //{ typeof(FileViewModel), typeof(IViewFor<FileViewModel>) }
+            { typeof(CashWithdrawalViewModel), typeof(IViewFor<CashWithdrawalViewModel>) },
+            
+            
         };
         public IViewFor? ResolveView<T>(T? viewModel, string? contract = null)
         {

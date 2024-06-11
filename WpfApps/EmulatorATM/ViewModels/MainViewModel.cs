@@ -24,9 +24,10 @@ namespace EmulatorATM.ViewModels
         DefaultScreenViewModel GreetingsPage = new DefaultScreenViewModel();
         SelectCardOptionViewModel SelectOptionPage = new SelectCardOptionViewModel();
         DepositCashViewModel DepositCashPage = new DepositCashViewModel();
+        CashWithdrawalViewModel CashWithdrawalPage = new CashWithdrawalViewModel();
         public enum ePages
         {
-            Greetings, PIN, SelectOption, DepositCash, Withdraw
+            Greetings, PIN, SelectOption, DepositCash, Withdrawal
         }
         private ePages _curPage;
         public ePages CurPage 
@@ -69,6 +70,7 @@ namespace EmulatorATM.ViewModels
                     IsInsertCardActionEnable = false;
                     CurPage = ePages.PIN;
                     DepositCashPage.TerminalBalanceVisibility = value.AdminCardTextVisibility;
+                    CashWithdrawalPage.TerminalBalanceVisibility = value.AdminCardTextVisibility;
                 }
                 if (value == null)
                 {
@@ -144,6 +146,8 @@ namespace EmulatorATM.ViewModels
             Pages.Add(ePages.Greetings, GreetingsPage);
             Pages.Add(ePages.SelectOption, SelectOptionPage);
             Pages.Add(ePages.DepositCash, DepositCashPage);
+            Pages.Add(ePages.Withdrawal, CashWithdrawalPage);
+            
             //CardNumber = string.Format("{0}  {1}  {2}  {3}", ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4))
             CardViewModelFirst = new CardViewModel(IsAdmin: false) { Balance = 100000 };
             CardViewModelSecond = new CardViewModel(IsAdmin: false) { Balance= 22312 };
@@ -167,11 +171,13 @@ namespace EmulatorATM.ViewModels
             IsInsertCardActionEnable = true;
 
             SelectOptionPage.OnBack += (x,y) => CurPage = ePages.Greetings;
-            SelectOptionPage.OnSelectWithdraw += (x, y) => CurPage = ePages.Withdraw;
+            SelectOptionPage.OnSelectWithdraw += (x, y) => CurPage = ePages.Withdrawal;
             SelectOptionPage.OnSelectDepositCash += (x, y) => CurPage = ePages.DepositCash;
 
             DepositCashPage.OnAccept += (x, y) => CurPage = ePages.SelectOption;
             DepositCashPage.OnCancel += (x, y) => CurPage = ePages.SelectOption;
+
+            CashWithdrawalPage.OnBack += (x, y) => CurPage = ePages.SelectOption;
 
             HandMoneyVisibility = Visibility.Visible;
         }
@@ -240,6 +246,44 @@ namespace EmulatorATM.ViewModels
                             CurPage = ePages.Greetings;
                             break;
 
+                    }
+                    break;
+                    case ePages.Withdrawal:
+                    switch (e.btn)
+                    {
+                        case DialButtons.Zero:
+                            CashWithdrawalPage.AddNumber('0');
+                            break;
+                        case DialButtons.One:
+                            CashWithdrawalPage.AddNumber('1');
+                            break;
+                        case DialButtons.Two:
+                            CashWithdrawalPage.AddNumber('2');
+                            break;
+                        case DialButtons.Three:
+                            CashWithdrawalPage.AddNumber('3');
+                            break;
+                        case DialButtons.Four:
+                            CashWithdrawalPage.AddNumber('4');
+                            break;
+                        case DialButtons.Five:
+                            CashWithdrawalPage.AddNumber('5');
+                            break;
+                        case DialButtons.Six:
+                            CashWithdrawalPage.AddNumber('6');
+                            break;
+                        case DialButtons.Seven:
+                            CashWithdrawalPage.AddNumber('7');
+                            break;
+                        case DialButtons.Eight:
+                            CashWithdrawalPage.AddNumber('8');
+                            break;
+                        case DialButtons.Nine:
+                            CashWithdrawalPage.AddNumber('9');
+                            break;
+                        case DialButtons.Clear:
+                            CashWithdrawalPage.RemoveNumber();
+                            break;                                                
                     }
                     break;
             }

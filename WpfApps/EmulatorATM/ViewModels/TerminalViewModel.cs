@@ -37,6 +37,19 @@ namespace EmulatorATM.ViewModels
             { 2000, maxCount },
             { 5000, maxCount }
         };
+        public int TotalBalance 
+        {
+            get 
+            {
+                var res = 0;
+                foreach (var a in Balance)
+                {
+                    //Бугагаг... без контекста выглядит даже смешно
+                    res += a.Key * a.Value;
+                }
+                return res;
+            }
+        }
         private object lockMoney = new object();
         public void WithdrawMoney(int amount, bool useHighestDenominations)
         {
