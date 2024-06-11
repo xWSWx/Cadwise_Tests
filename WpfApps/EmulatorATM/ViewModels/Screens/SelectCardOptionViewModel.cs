@@ -20,6 +20,8 @@ namespace EmulatorATM.ViewModels.Screens
 
         public ObservableCollection<DenominationBalanceItemViewModel> BalanceItems { get; set; }
         public ICommand Back { get; }
+        public ICommand SelectWithdraw { get; }
+        public ICommand SelectDepositCash { get; }
         private double _balance;
         public double Balance 
         {
@@ -63,6 +65,8 @@ namespace EmulatorATM.ViewModels.Screens
         {
             BalanceItems = new ObservableCollection<DenominationBalanceItemViewModel>();
             Back = ReactiveCommand.Create(() => OnBack?.Invoke(this, EventArgs.Empty));
+            SelectWithdraw = ReactiveCommand.Create(() => OnSelectWithdraw?.Invoke(this, EventArgs.Empty));
+            SelectDepositCash = ReactiveCommand.Create(() => OnSelectDepositCash?.Invoke(this, EventArgs.Empty));
             Balance = 50000.00;
             TerminalViewModel.OnTerminalChanged += TerminalViewModel_OnTerminalChanged;
             TerminalViewModel_OnTerminalChanged(null, Global.TerminalViewModelInstance);

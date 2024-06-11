@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -22,9 +23,10 @@ namespace EmulatorATM.ViewModels
         EnterPinViewModel PinPage = new EnterPinViewModel();
         DefaultScreenViewModel GreetingsPage = new DefaultScreenViewModel();
         SelectCardOptionViewModel SelectOptionPage = new SelectCardOptionViewModel();
+        DepositCashViewModel DepositCashPage = new DepositCashViewModel();
         public enum ePages
         {
-            Greetings, PIN, SelectOption
+            Greetings, PIN, SelectOption, DepositCash, Withdraw
         }
         private ePages _curPage;
         public ePages CurPage 
@@ -66,6 +68,7 @@ namespace EmulatorATM.ViewModels
                 {
                     IsInsertCardActionEnable = false;
                     CurPage = ePages.PIN;
+                    DepositCashPage.TerminalBalanceVisibility = value.AdminCardTextVisibility;
                 }
                 if (value == null)
                 {
@@ -93,6 +96,7 @@ namespace EmulatorATM.ViewModels
                 if (value != null)
                 {
                     value.Clear();
+                    value.Load(SelectedCard);
                 }
                 if (value == GreetingsPage)
                 {
@@ -102,6 +106,15 @@ namespace EmulatorATM.ViewModels
                 {
                     SelectOptionPage.LoadCard(SelectedCard);
                 }
+                if (value == DepositCashPage)
+                {
+                    HandMoneyVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    HandMoneyVisibility = Visibility.Collapsed;
+                }
+
                 this.RaiseAndSetIfChanged(ref _currentPage, value); 
             }
         }
@@ -111,11 +124,26 @@ namespace EmulatorATM.ViewModels
             get => _isInsertCardActionEnable;
             set => this.RaiseAndSetIfChanged(ref _isInsertCardActionEnable, value);
         }
+        private Visibility _handMoneyVisibility;
+        public Visibility HandMoneyVisibility
+        {
+            get => _handMoneyVisibility;
+            set => this.RaiseAndSetIfChanged(ref _handMoneyVisibility, value);
+        }
+        public ReactiveCommand<int, Unit> InsertCash { get; }
         public MainViewModel()
         {
+            InsertCash = ReactiveCommand.Create<int>((x) =>
+            {
+                if (CurrentPage == DepositCashPage)
+                {
+                    DepositCashPage.InsertCash(x, 1);
+                }
+            });
             Pages.Add(ePages.PIN, PinPage);
             Pages.Add(ePages.Greetings, GreetingsPage);
             Pages.Add(ePages.SelectOption, SelectOptionPage);
+            Pages.Add(ePages.DepositCash, DepositCashPage);
             //CardNumber = string.Format("{0}  {1}  {2}  {3}", ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4), ATMutils.GenerateRandomNumberString(4))
             CardViewModelFirst = new CardViewModel(IsAdmin: false) { Balance = 100000 };
             CardViewModelSecond = new CardViewModel(IsAdmin: false) { Balance= 22312 };
@@ -138,11 +166,19 @@ namespace EmulatorATM.ViewModels
             CurPage = ePages.Greetings;
             IsInsertCardActionEnable = true;
 
-            SelectOptionPage.OnBack += OptionsPage_OnBack;
+            SelectOptionPage.OnBack += (x,y) => CurPage = ePages.Greetings;
+            SelectOptionPage.OnSelectWithdraw += (x, y) => CurPage = ePages.Withdraw;
+            SelectOptionPage.OnSelectDepositCash += (x, y) => CurPage = ePages.DepositCash;
+
+            DepositCashPage.OnAccept += (x, y) => CurPage = ePages.SelectOption;
+            DepositCashPage.OnCancel += (x, y) => CurPage = ePages.SelectOption;
+
+            HandMoneyVisibility = Visibility.Visible;
         }
         public void ClearAfterStart() 
         {
             SelectedCard = null;
+            CurPage = ePages.Greetings;
         }
         private void DialViewModel_OnButtonPressed(object? sender, CustomEvents.CustomEventHandlers.DialButtonsEventArgs e)
         {
@@ -210,10 +246,6 @@ namespace EmulatorATM.ViewModels
             
 
             
-        }
-        private void OptionsPage_OnBack(object? sender, EventArgs e) 
-        {
-            CurPage=ePages.Greetings;
-        }
+        }        
     }
 }

@@ -8,6 +8,7 @@
         xmlns:ViewModelsControls="clr-namespace:EmulatorATM.ViewModels.Controls"
         xmlns:ViewsControls="clr-namespace:EmulatorATM.Views.Controls"
         xmlns:Views="clr-namespace:EmulatorATM.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         d:DataContext="{d:DesignInstance Type=ViewModels:MainViewModel, IsDesignTimeCreatable=True}"   
@@ -16,6 +17,50 @@
         <ViewModels:MainViewModel />
     </Window.DataContext>
     <DockPanel>
+        <StackPanel Visibility="{Binding HandMoneyVisibility}" DockPanel.Dock="Right" Orientation="Vertical">
+            <Button Command="{Binding InsertCash}" Style="{StaticResource AtmDialButtonStyle}" Margin="5">
+                <Button.CommandParameter>
+                    <sys:Int32>10</sys:Int32>
+                </Button.CommandParameter>
+                10
+            </Button>
+            <Button Command="{Binding InsertCash}" Style="{StaticResource AtmDialButtonStyle}" Margin="5">
+                <Button.CommandParameter>
+                    <sys:Int32>50</sys:Int32>
+                </Button.CommandParameter>
+                50
+            </Button>
+            <Button Command="{Binding InsertCash}" Style="{StaticResource AtmDialButtonStyle}" Margin="5">
+                <Button.CommandParameter>
+                    <sys:Int32>100</sys:Int32>
+                </Button.CommandParameter>
+                100
+            </Button>
+            <Button Command="{Binding InsertCash}" Style="{StaticResource AtmDialButtonStyle}" Margin="5">
+                <Button.CommandParameter>
+                    <sys:Int32>500</sys:Int32>
+                </Button.CommandParameter>
+                500
+            </Button>
+            <Button Command="{Binding InsertCash}" Style="{StaticResource AtmDialButtonStyle}" Margin="5">
+                <Button.CommandParameter>
+                    <sys:Int32>1000</sys:Int32>
+                </Button.CommandParameter>
+                1000
+            </Button>
+            <Button Command="{Binding InsertCash}" Style="{StaticResource AtmDialButtonStyle}" Margin="5">
+                <Button.CommandParameter>
+                    <sys:Int32>2000</sys:Int32>
+                </Button.CommandParameter>
+                2000
+            </Button>
+            <Button Command="{Binding InsertCash}" Style="{StaticResource AtmDialButtonStyle}" Margin="5">
+                <Button.CommandParameter>
+                    <sys:Int32>5000</sys:Int32>
+                </Button.CommandParameter>
+                5000
+            </Button>
+        </StackPanel>
         <StackPanel DockPanel.Dock="Bottom" Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center">
             <Grid >
                 <TextBlock Margin="3">Card On Hand</TextBlock>

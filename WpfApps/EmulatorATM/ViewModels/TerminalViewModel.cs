@@ -23,8 +23,11 @@ namespace EmulatorATM.ViewModels
             get => _balance;
             set => this.RaiseAndSetIfChanged(ref _balance, value);
         }
-        
-        private Dictionary<int, int> maxCapacity = new Dictionary<int, int>()
+        public void HandMadeChange() 
+        {
+            OnTerminalChanged?.Invoke(this, this);
+        }
+        public Dictionary<int, int> maxCapacity { get; private set; } = new Dictionary<int, int>()
         {
             { 10, maxCount },
             { 50, maxCount },
@@ -32,7 +35,7 @@ namespace EmulatorATM.ViewModels
             { 500, maxCount },
             { 1000, maxCount },
             { 2000, maxCount },
-            { 5000, maxCount }            
+            { 5000, maxCount }
         };
         private object lockMoney = new object();
         public void WithdrawMoney(int amount, bool useHighestDenominations)

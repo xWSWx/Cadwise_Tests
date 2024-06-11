@@ -12,6 +12,7 @@
     <None Remove="Assets\Icons\BankLogo.png" />
     <None Remove="Assets\Icons\PaymentSystemLogo.png" />
     <None Remove="Assets\ScreenBackGrounds\DefaultScreenBackground.png" />
+    <None Remove="Assets\ScreenBackGrounds\DepositCashBackground.png" />
     <None Remove="Assets\ScreenBackGrounds\PinScreenBackground.png" />
     <None Remove="Assets\ScreenBackGrounds\SelectOptionScreenBackground.png" />
   </ItemGroup>
@@ -29,6 +30,7 @@
     <Resource Include="Assets\Icons\BankLogo.png" />
     <Resource Include="Assets\Icons\PaymentSystemLogo.png" />
     <Resource Include="Assets\ScreenBackGrounds\DefaultScreenBackground.png" />
+    <Resource Include="Assets\ScreenBackGrounds\DepositCashBackground.png" />
     <Resource Include="Assets\ScreenBackGrounds\PinScreenBackground.png" />
     <Resource Include="Assets\ScreenBackGrounds\SelectOptionScreenBackground.png" />
   </ItemGroup>
