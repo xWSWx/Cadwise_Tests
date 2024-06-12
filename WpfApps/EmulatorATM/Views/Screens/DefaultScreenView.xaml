@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="450">
     <Grid>
         <Image x:Name="___Assets_ScreenBackGrounds_DefaultScreenBackground_png" Stretch="Uniform" Source="/Assets/ScreenBackGrounds/DefaultScreenBackground.png"/>
-        <TextBlock FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Insert you card</TextBlock>
-        <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Red" StrokeThickness="6" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
+        <TextBlock FontWeight="Bold" FontSize="30" Foreground="black" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Insert your card</TextBlock>
+        <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Purple" StrokeThickness="3" VerticalAlignment="Bottom" Margin="103,0,97,7"></Line>
     </Grid>
 </UserControl>

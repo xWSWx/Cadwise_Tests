@@ -10,10 +10,10 @@
              d:DesignHeight="450" d:DesignWidth="450">
     <Grid>
         <Image  Stretch="Uniform" Source="/Assets/ScreenBackGrounds/SelectOptionScreenBackground.png"/>
-        <TextBlock FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0">Current Balance is</TextBlock>
-        <TextBlock Text="{Binding BalanceString}" FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"></TextBlock>
-        <TextBlock FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Select Option</TextBlock>
-        <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Red" StrokeThickness="6" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
+        <TextBlock FontWeight="DemiBold" FontSize="30" Foreground="#fc9403" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,70,0,0">Current Balance is</TextBlock>
+        <TextBlock Text="{Binding BalanceString}" FontWeight="DemiBold" FontSize="30" Foreground="white" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"></TextBlock>
+        <TextBlock FontWeight="DemiBold" FontSize="30" Foreground="#fc9403" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Select Option</TextBlock>
+        <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Purple" StrokeThickness="3" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -23,13 +23,13 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Button Command="{Binding Back}" Grid.Column="1" VerticalAlignment="Bottom" Height="50" Style="{StaticResource AtmDialButtonStyle}" Margin="0,0,0,50">
-                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">Exit</TextBlock>
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold">Exit</TextBlock>
             </Button>
             <Button Command="{Binding SelectWithdraw}" Grid.Column="1" VerticalAlignment="Center" Height="50" Style="{StaticResource AtmDialButtonStyle}" >
-                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">Withdrawal</TextBlock>
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold">Withdrawal</TextBlock>
             </Button>
             <Button Command="{Binding SelectDepositCash}" Grid.Column="3" VerticalAlignment="Center" Height="50" Style="{StaticResource AtmDialButtonStyle}">
-                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">Deposit cash</TextBlock>
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold">Deposit cash</TextBlock>
             </Button>
             <ListView Visibility="{Binding TerminalBalanceVisibility}" Grid.Column="3" Margin="0,0,0,40" VerticalAlignment="Bottom"                       
                       ItemsSource="{Binding BalanceItems}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}">

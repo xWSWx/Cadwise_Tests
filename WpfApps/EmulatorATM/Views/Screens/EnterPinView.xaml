@@ -11,8 +11,8 @@
     <Grid>
         <Grid>
             <Image x:Name="___Assets_ScreenBackGrounds_DefaultScreenBackground_png" Stretch="Uniform" Source="/Assets/ScreenBackGrounds/PinScreenBackground.png"/>
-            <TextBlock FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Enter PIN code</TextBlock>
-            <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Red" StrokeThickness="6" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
+            <TextBlock FontWeight="DemiBold" FontSize="30" Foreground="#fc9403" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Enter PIN</TextBlock>
+            <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Purple" StrokeThickness="3" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
             <Border Background="White" BorderThickness="8" BorderBrush="{StaticResource GrayBackGround}" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="{Binding PIN}" Width="120" Height="50" FontSize="30" HorizontalAlignment="Center" TextAlignment="Center"></TextBlock>
             </Border>

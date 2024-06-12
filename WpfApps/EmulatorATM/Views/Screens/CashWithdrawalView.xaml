@@ -13,8 +13,8 @@
         <Border Background="White" BorderThickness="8" BorderBrush="{StaticResource GrayBackGround}" CornerRadius="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,150">
             <TextBlock Text="{Binding AmountString}" Width="240" Height="50" FontSize="30" HorizontalAlignment="Center" TextAlignment="Center"/>
         </Border>
-        <TextBlock FontWeight="Bold" FontSize="30" Foreground="Red" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Enter amount</TextBlock>
-        <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Red" StrokeThickness="6" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
+        <TextBlock FontWeight="DemiBold" FontSize="30" Foreground="#fc9403" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom">Enter amount</TextBlock>
+        <Line X1="0" Y1="0" X2="450" Y2="0" Stroke="Purple" StrokeThickness="3" VerticalAlignment="Bottom" Margin="100,10,100,10"></Line>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"/>
@@ -24,13 +24,13 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Button Command="{Binding Back}" Grid.Column="1" VerticalAlignment="Bottom" Height="50" Style="{StaticResource AtmDialButtonStyle}" Margin="0,0,0,50">
-                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">Back</TextBlock>
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold">Back</TextBlock>
             </Button>
             <Button Command="{Binding SmallWithdrawal}" Grid.Column="1" VerticalAlignment="Center" Height="50" Style="{StaticResource AtmDialButtonStyle}" >
-                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">small</TextBlock>
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold">Small</TextBlock>
             </Button>
             <Button Command="{Binding LargeWithdrawal}" Grid.Column="3" VerticalAlignment="Center" Height="50" Style="{StaticResource AtmDialButtonStyle}">
-                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold">large</TextBlock>
+                <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="DemiBold">Large</TextBlock>
             </Button>
             <ListView Visibility="{Binding TerminalBalanceVisibility}" Grid.Column="3" Margin="0,0,0,40" VerticalAlignment="Bottom"                       
                   ItemsSource="{Binding BalanceItems}" ItemTemplateSelector="{StaticResource ViewModelTemplateSelector}">
