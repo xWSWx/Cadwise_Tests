@@ -75,7 +75,8 @@ namespace ProcessingTextFiles.Tests.ViewModels.Controls
             viewModel.Pause.Execute(null);
 
             // Assert
-            Assert.That(viewModel.CancelToken.Paused, Is.True);
+            Assert.That(viewModel.EventSlim.IsSet, Is.Not.True);
+            Assert.That(viewModel.Paused, Is.True);            
             // Add more assertions as needed
         }
 
