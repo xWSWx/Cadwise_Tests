@@ -17,7 +17,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
     public enum FileActions
     {
         RemoveWordsLessThan,
-        removePunctuation
+        RemovePunctuation
     }
     public class FileProcessingViewModel : ReactiveObject
     {
@@ -135,6 +135,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
 
         public FileProcessingViewModel() 
         {
+
             FilePrefix = "Prefix-" + id.ToString()+".";
             cancelToken = new CustomCancellationToken(id);
             eventSlim = new ManualResetEventSlim(true);
@@ -173,12 +174,6 @@ namespace ProcessingTextFiles.ViewModels.Controls
                 IsSelectEnabled = true;
                 CurentProcessingText = ResourcesNameSpace.Resources.ALLFILESDONE;
             };
-            FileProcessor.OnPaused += (x, y) =>
-            {
-                if (y.id != cancelToken.Id)
-                    return;
-                CurentProcessingText = ResourcesNameSpace.Resources.PAUSED;
-            };
             FileProcessor.OnStarted += (x, y) =>
             {
                 if (y.id != cancelToken.Id)
@@ -190,6 +185,19 @@ namespace ProcessingTextFiles.ViewModels.Controls
             Select = ReactiveCommand.Create(SelectFiles);
             Play = ReactiveCommand.Create(() =>
             {
+                IFileProcessingStrategy strategy;
+                switch (FileAction)
+                {
+                    case FileActions.RemovePunctuation:
+                        strategy = new RemovePunctuationStrategy(); 
+                        break;
+                    case FileActions.RemoveWordsLessThan:
+                        strategy = new RemoveShortWordsStrategy(); 
+                        break;
+                    default:
+                        strategy = new CopyStrategy();
+                        break;
+                }
                 if (CharactersCount == 0 && FileAction == FileActions.RemoveWordsLessThan)
                 {
                     MessageBox.Show("Please, choose characters count");
@@ -200,7 +208,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
                     MessageBox.Show("Prefix shuld be not empty string");
                     return;
                 }
-                if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, eventSlim, FileAction, CharactersCount))
+                if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, eventSlim, strategy, CharactersCount))
                 {
                     IsPlayEnabled = false;
                     IsPauseEnabled = true;

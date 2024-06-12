@@ -26,18 +26,17 @@ namespace ProcessingTextFiles.FileProcessing
         
         public static event ProcessingHandler OnProgress;
 
-        public static event GuidEventHandler OnPaused;
         public static event GuidEventHandler OnCancelled;
         public static event GuidEventHandler OnStarted;
 
         static int bufferSize = 4096;
-        public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, ManualResetEventSlim pauseEvent, FileActions action, int maxwordSize ) 
+        public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, ManualResetEventSlim pauseEvent, IFileProcessingStrategy fileProcessingStrategy, int maxwordSize ) 
         {
-            Task task = Task.Run(() => FileProcessor_TaskMethod(pathes, prefix, cancelToken, pauseEvent, action, maxwordSize));            
+            Task task = Task.Run(() => FileProcessor_TaskMethod(pathes, prefix, cancelToken, pauseEvent, fileProcessingStrategy, maxwordSize));            
             return true; 
         }
 
-        static async void FileProcessor_TaskMethod(IEnumerable<string> pathes, string prefix, CustomCancellationToken token, ManualResetEventSlim pauseEvent, FileActions action, int maxWordSize)
+        static async void FileProcessor_TaskMethod(IEnumerable<string> pathes, string prefix, CustomCancellationToken token, ManualResetEventSlim pauseEvent, IFileProcessingStrategy fileProcessingStrategy, int maxWordSize)
         {
             OnStarted?.Invoke(null, new(token.Id));
             List<string> processedFiles = new List<string>();
@@ -105,47 +104,14 @@ namespace ProcessingTextFiles.FileProcessing
                                 return;
                             }
 
-                            //TODO: какой то очень плохой Thread.Sleep. Заменим на более адекватную штуку.
-                            //Может, вообще избавться от OnPaused?
-                            //Ведь, управление паузой находится ВНЕ!
-                            //Ведь, приём состояния паузы находится ВНЕ!
-                            //if (!pauseEvent.IsSet)
-                            //    OnPaused?.Invoke(null, new(token.Id));
-
                             pauseEvent.Wait();
-                            //if (token.Paused)
-                            //{
-                            //    OnPaused?.Invoke(null, new(token.Id));
-                            //    while (token.Paused)
-                            //    {
-                            //        Thread.Sleep(1000);
-                            //    }
-                            //}
-
 
                             byte[] proccessedData;
                             int proccessedBytesCout = 0;
-                            switch (action)
-                            {
-                                case FileActions.removePunctuation:
-                                    proccessedBytesCout = RemovePunctuation(buffer, out proccessedData);
-                                    break;
-                                case FileActions.RemoveWordsLessThan:
-                                    proccessedBytesCout = RemoveShortWords(buffer, maxWordSize, out proccessedData, ref unknowPart, ref unknowPartLength);
-                                    
-                                    break;
-                                default:
-                                    proccessedData = buffer;
-                                    proccessedBytesCout = bytesRead;
-                                    break;
-                            }
 
-
-                            //outputStream.Write(buffer, 0, bytesRead);
+                            proccessedBytesCout = fileProcessingStrategy.Process(buffer, out proccessedData, ref unknowPart, ref unknowPartLength, maxWordSize);
+                                                        
                             outputStream.Write(proccessedData, 0, proccessedBytesCout);
-
-                            //Thread.Sleep(bytesRead);
-
                             currentByteProgress += bytesRead;
                             ProgressPercent = (int)((currentByteProgress * 100) / TotalSize);
                             OnProgress?.Invoke(null, new (token.Id, ProgressPercent));
@@ -177,89 +143,6 @@ namespace ProcessingTextFiles.FileProcessing
                 string extension = Path.GetExtension(inputFilePath);
                 return Path.Combine(directory, $"{prefix}{fileNameWithoutExtension}{extension}");
             }catch(Exception ex) { return string.Empty; }
-        }
-        public static int RemovePunctuation(byte[] indata, out byte[] outdata)
-        {
-
-            var chars = Encoding.UTF8.GetChars(indata);
-            StringBuilder textAccumulator = new StringBuilder();
-            outdata = new byte[indata.Length];            
-
-            foreach(var c in chars)
-            {                
-                if (char.IsPunctuation(c))
-                    continue;
-
-                textAccumulator.Append(c);                
-            }
-            outdata = Encoding.UTF8.GetBytes(textAccumulator.ToString());            
-                        
-            return outdata.Length;
-        }
-
-        public static int RemoveShortWords(byte[] indata, int shouldLessWordLength, out byte[] outdata, ref byte[] unknownPart, ref int unknownPartLength)
-        {
-            var chars = Encoding.UTF8.GetChars(indata);
-            var unknownPartChars = Encoding.UTF8.GetChars(unknownPart);
-            
-            // Initialize the accumulators
-            StringBuilder wordAccumulator = new StringBuilder();
-            StringBuilder textAccumulator = new StringBuilder();
-
-            // Process the unknown part, if any
-            foreach(var c in unknownPartChars)
-            {
-                if (c == '\0')
-                    break;
-                wordAccumulator.Append(c);                
-            }
-
-
-            
-            bool isLimitReachedFirstTimeForCurrentWord = true;
-            bool isLimitReached = false;
-            foreach(var c in chars)
-            {                                
-                if (char.IsLetter(c))
-                {
-                    if (isLimitReached)
-                    {
-                        if (isLimitReachedFirstTimeForCurrentWord)
-                        {
-                            isLimitReachedFirstTimeForCurrentWord = false;
-                            textAccumulator.Append(wordAccumulator);
-                            wordAccumulator.Clear();
-                        }
-                        textAccumulator.Append(c);
-                        continue;
-                    }
-
-                    wordAccumulator.Append(c);
-
-                    if (wordAccumulator.Length < shouldLessWordLength) 
-                    {
-                        continue;
-                    }
-
-                    isLimitReachedFirstTimeForCurrentWord = true;
-                    isLimitReached = true;                                                                               
-                }
-                else
-                {
-                    isLimitReachedFirstTimeForCurrentWord = false;
-                    isLimitReached = false;
-                    var isLittleWord = wordAccumulator.Length < shouldLessWordLength;
-                    if (isLittleWord)
-                    {
-                        wordAccumulator.Clear();                           
-                    }
-                    textAccumulator.Append(c);
-                }
-            }
-            unknownPartLength = wordAccumulator.Length;
-            unknownPart = Encoding.Unicode.GetBytes(wordAccumulator.ToString());            
-            outdata = Encoding.UTF8.GetBytes(textAccumulator.ToString());
-            return outdata.Length;
         }
     }
 }
