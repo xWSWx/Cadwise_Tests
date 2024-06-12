@@ -17,7 +17,7 @@ namespace EmulatorATM.ViewModels.Controls
     public class DialViewModel : ReactiveObject
     {
 
-        public event DialButtonsEventHandler? OnButtonPressed;
+        public DialButtonsEventHandler? OnButtonPressed;
 
 
         public ReactiveCommand<DialButtons, Unit> DialButtonCommand { get; }

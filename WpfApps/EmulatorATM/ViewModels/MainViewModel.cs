@@ -20,11 +20,11 @@ namespace EmulatorATM.ViewModels
     public class MainViewModel : ReactiveObject
     {
         Dictionary<ePages, BasicScreenViewModel> Pages = new();
-        EnterPinViewModel PinPage = new EnterPinViewModel();
-        DefaultScreenViewModel GreetingsPage = new DefaultScreenViewModel();
-        SelectCardOptionViewModel SelectOptionPage = new SelectCardOptionViewModel();
-        DepositCashViewModel DepositCashPage = new DepositCashViewModel();
-        CashWithdrawalViewModel CashWithdrawalPage = new CashWithdrawalViewModel();
+        public EnterPinViewModel PinPage = new EnterPinViewModel();
+        public DefaultScreenViewModel GreetingsPage = new DefaultScreenViewModel();
+        public SelectCardOptionViewModel SelectOptionPage = new SelectCardOptionViewModel();
+        public DepositCashViewModel DepositCashPage = new DepositCashViewModel();
+        public CashWithdrawalViewModel CashWithdrawalPage = new CashWithdrawalViewModel();
         public enum ePages
         {
             Greetings, PIN, SelectOption, DepositCash, Withdrawal
@@ -186,7 +186,7 @@ namespace EmulatorATM.ViewModels
             SelectedCard = null;
             CurPage = ePages.Greetings;
         }
-        private void DialViewModel_OnButtonPressed(object? sender, CustomEvents.CustomEventHandlers.DialButtonsEventArgs e)
+        public void DialViewModel_OnButtonPressed(object? sender, CustomEvents.CustomEventHandlers.DialButtonsEventArgs e)
         {
 
             /////////////

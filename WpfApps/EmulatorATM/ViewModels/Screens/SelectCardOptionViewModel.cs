@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,9 +20,9 @@ namespace EmulatorATM.ViewModels.Screens
         public EventHandler? OnSelectDepositCash;
 
         public ObservableCollection<DenominationBalanceItemViewModel> BalanceItems { get; set; }
-        public ICommand Back { get; }
-        public ICommand SelectWithdraw { get; }
-        public ICommand SelectDepositCash { get; }
+        public ReactiveCommand<Unit,Unit> Back { get; }
+        public ReactiveCommand<Unit, Unit> SelectWithdraw { get; }
+        public ReactiveCommand<Unit, Unit> SelectDepositCash { get; }
         private double _balance;
         public double Balance 
         {

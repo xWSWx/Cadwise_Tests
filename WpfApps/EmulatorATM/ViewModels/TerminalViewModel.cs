@@ -11,11 +11,11 @@ namespace EmulatorATM.ViewModels
 {
     public class TerminalViewModel: ReactiveObject
     {
-        public static event EventHandler<TerminalViewModel>? OnTerminalChanged;
+        public static EventHandler<TerminalViewModel>? OnTerminalChanged;
         /// <summary>
         /// для просторы вычислений и дебага, вместимость будет не более 10
         /// </summary>
-        static readonly int maxCount = 10;
+        static public readonly int maxCount = 10;
         static readonly Random rnd = new Random();
         private Dictionary<int, int> _balance;
         public Dictionary<int, int> Balance 
@@ -51,60 +51,7 @@ namespace EmulatorATM.ViewModels
             }
         }
         private object lockMoney = new object();
-        public void WithdrawMoney(int amount, bool useHighestDenominations)
-        {
-            lock (lockMoney)
-            {
-
-                var copyedBalance = new Dictionary<int, int>(Balance);
-                try
-                {
-
-                    var sortedDenominations = useHighestDenominations ? copyedBalance.Keys.OrderByDescending(k => k) : copyedBalance.Keys.OrderBy(k => k);
-                    var dispensed = new Dictionary<int, int>();
-
-                    foreach (var denomination in sortedDenominations)
-                    {
-                        int count = Math.Min(amount / denomination, copyedBalance[denomination]);
-                        if (count > 0)
-                        {
-                            dispensed[denomination] = count;
-                            amount -= denomination * count;
-                        }
-
-                        if (amount == 0)
-                        {
-                            break;
-                        }
-                    }
-
-                    if (amount > 0)
-                    {
-                        MessageBox.Show("Unable to dispense the exact amount with the available denominations.");
-                        return;
-                    }
-
-                    foreach (var denomination in dispensed.Keys)
-                    {
-                        copyedBalance[denomination] -= dispensed[denomination];
-                    }
-
-                    //меняем в основе
-                    foreach (var a in copyedBalance)
-                    {
-                        Balance[a.Key] = a.Value;
-                    }
-                    MessageBox.Show("Dispensed: " + string.Join(", ", dispensed.Select(kv => $"{kv.Value} x {kv.Key}")));
-                    OnTerminalChanged?.Invoke(this, this);
-                }
-                catch (Exception ex) 
-                {
-                    ;
-                    MessageBox.Show(ex.ToString());
-                    Balance = copyedBalance;
-                }
-            }
-        }
+        
         /// <summary>
         /// Вернёт невзятые купюры
         /// </summary>

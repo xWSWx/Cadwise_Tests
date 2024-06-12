@@ -14,8 +14,8 @@ namespace EmulatorATM.ViewModels.Screens
 {
     public class DepositCashViewModel : BasicScreenViewModel
     {
-        public event EventHandler? OnAccept;
-        public event EventHandler? OnCancel;
+        public EventHandler? OnAccept;
+        public EventHandler? OnCancel;
         public ObservableCollection<DenominationBalanceItemViewModel> BalanceItems { get; set; }
         public Dictionary<int, int> currentInsertedCash { get; private set; } = new Dictionary<int, int>();
         public ICommand Cancel { get; }
