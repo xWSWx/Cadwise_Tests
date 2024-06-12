@@ -93,30 +93,9 @@ namespace ProcessingTextFiles.Tests.ViewModels.Controls
             viewModel.Pause.Execute(null); // Resume processing
 
             // Assert
-            Assert.That(viewModel.CancelToken.Paused, Is.False);
-            // Add more assertions as needed
+            Assert.That(viewModel.EventSlim.IsSet, Is.True);
         }
 
-        //[Test]
-        //public void Files_CollectionChangedEvent_ShouldNotifyViewModel()
-        //{
-        //    // Arrange
-        //    var viewModel = new FileProcessingViewModel();
-        //    bool eventRaised = false;
-        //    viewModel.PropertyChanged += (sender, args) =>
-        //    {
-        //        if (args.PropertyName == nameof(viewModel.Files))
-        //        {
-        //            eventRaised = true;
-        //        }
-        //    };
-
-        //    // Act
-        //    viewModel.Files.Add(new FileViewModel("test.txt"));
-
-        //    // Assert
-        //    Assert.That(eventRaised, Is.True);
-        //}
 
         [Test]
         public void ClearCommand_Executed_ShouldClearFilesCollection()

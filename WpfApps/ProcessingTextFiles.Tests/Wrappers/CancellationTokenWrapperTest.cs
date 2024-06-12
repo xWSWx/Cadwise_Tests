@@ -8,32 +8,7 @@ namespace ProcessingTextFiles.Tests.Wrappers
     [TestFixture]
     public class CustomCancellationTokenTests
     {
-        [Test]
-        public void Pause_ShouldSetPausedToTrue()
-        {
-            // Arrange
-            var token = new CustomCancellationToken();
 
-            // Act
-            token.Pause();
-
-            // Assert
-            Assert.That(token.Paused, Is.True);
-        }
-
-        [Test]
-        public void Resume_ShouldSetPausedToFalse()
-        {
-            // Arrange
-            var token = new CustomCancellationToken();
-            token.Pause(); // Pausing the token first
-
-            // Act
-            token.Resume();
-
-            // Assert
-            Assert.That(token.Paused, Is.False);
-        }
 
         [Test]
         public void Stop_ShouldSetCancelledToTrue()

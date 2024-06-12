@@ -11,12 +11,9 @@ namespace ProcessingTextFiles.Wrappers
     {
         
         public Guid Id = Guid.Empty;
-        public bool Paused = false;
         public bool Cancelled = false;
         public bool Started = false;        
 
-        public void Pause()  => Paused = true;
-        public void Resume() => Paused = false;
         public void Stop ()  => Cancelled = true;
         public void Start () => Started = true;
         
