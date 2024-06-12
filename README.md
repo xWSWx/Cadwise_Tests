@@ -7,7 +7,8 @@
 1. Не реализован "словарь цветов", равно как и "превью всех цветов"
 1. Не реализована песочница для просмотра стилей 
 ## Обработчик файлов
-![Image alt](https://github.com/xWSWx/Cadwise_Tests/raw/Master/WpfApps/ProcessingTextFiles/Example.png)
+![Example](https://github.com/xWSWx/Cadwise_Tests/assets/29701338/15050231-a6b1-4a7a-8cc1-b284cff92fd3)
+
 ### Допущения
 ## Эмулятор терминала
 ### Допущения
