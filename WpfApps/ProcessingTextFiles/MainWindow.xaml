@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ProcessingTextFiles"
         mc:Ignorable="d"
         Loaded="Window_Loaded"
-        Title="MainWindow" Height="450" Width="800"
+        Title="File Processor" Height="450" Width="800"
         d:DataContext="{d:DesignInstance Type=ViewModels:MainViewModel, IsDesignTimeCreatable=True}"        
         >
     <Window.DataContext>

@@ -28,6 +28,8 @@ namespace ProcessingTextFiles.FileProcessing
 
         public static event GuidEventHandler OnPaused;
         public static event GuidEventHandler OnCancelled;
+        public static event GuidEventHandler OnStarted;
+
         static int bufferSize = 4096;
         public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, FileActions action, int maxwordSize ) 
         {
@@ -37,6 +39,7 @@ namespace ProcessingTextFiles.FileProcessing
 
         static async void FileProcessor_TaskMethod(IEnumerable<string> pathes, string prefix, CustomCancellationToken token, FileActions action, int maxWordSize)
         {
+            OnStarted?.Invoke(null, new(token.Id));
             List<string> processedFiles = new List<string>();
             OnProgress?.Invoke(null, new (token.Id, 0));
             string outputFilePath = string.Empty;

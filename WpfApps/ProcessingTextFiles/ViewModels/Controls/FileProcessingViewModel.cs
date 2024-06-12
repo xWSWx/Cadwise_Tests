@@ -169,6 +169,12 @@ namespace ProcessingTextFiles.ViewModels.Controls
                     return;
                 CurentProcessingText = ResourcesNameSpace.Resources.PAUSED;
             };
+            FileProcessor.OnStarted += (x, y) =>
+            {
+                if (y.id != cancelToken.Id)
+                    return;
+                CurentProcessingText = "Started!";
+            };
             IsSelectEnabled = true;
             IsDeleteEnabled = true;
             Select = ReactiveCommand.Create(SelectFiles);
