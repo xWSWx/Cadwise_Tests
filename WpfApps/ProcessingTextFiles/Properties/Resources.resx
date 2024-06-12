@@ -135,4 +135,7 @@
   <data name="REMOVEWORDSLESSTHEN" xml:space="preserve">
     <value>Remove words less than</value>
   </data>
+  <data name="RESUMED" xml:space="preserve">
+    <value>Resumed</value>
+  </data>
 </root>

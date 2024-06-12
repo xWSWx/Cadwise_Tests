@@ -113,5 +113,14 @@ namespace ResourcesNameSpace {
                 return ResourceManager.GetString("REMOVEWORDSLESSTHEN", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Resumed.
+        /// </summary>
+        internal static string RESUMED {
+            get {
+                return ResourceManager.GetString("RESUMED", resourceCulture);
+            }
+        }
     }
 }

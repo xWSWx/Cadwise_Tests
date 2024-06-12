@@ -31,13 +31,13 @@ namespace ProcessingTextFiles.FileProcessing
         public static event GuidEventHandler OnStarted;
 
         static int bufferSize = 4096;
-        public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, FileActions action, int maxwordSize ) 
+        public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, ManualResetEventSlim pauseEvent, FileActions action, int maxwordSize ) 
         {
-            Task task = Task.Run(() => FileProcessor_TaskMethod(pathes, prefix, cancelToken, action, maxwordSize));            
+            Task task = Task.Run(() => FileProcessor_TaskMethod(pathes, prefix, cancelToken, pauseEvent, action, maxwordSize));            
             return true; 
         }
 
-        static async void FileProcessor_TaskMethod(IEnumerable<string> pathes, string prefix, CustomCancellationToken token, FileActions action, int maxWordSize)
+        static async void FileProcessor_TaskMethod(IEnumerable<string> pathes, string prefix, CustomCancellationToken token, ManualResetEventSlim pauseEvent, FileActions action, int maxWordSize)
         {
             OnStarted?.Invoke(null, new(token.Id));
             List<string> processedFiles = new List<string>();
@@ -105,14 +105,22 @@ namespace ProcessingTextFiles.FileProcessing
                                 return;
                             }
 
-                            if (token.Paused)
-                            {
-                                OnPaused?.Invoke(null, new(token.Id));
-                                while (token.Paused)
-                                {
-                                    Thread.Sleep(1000);
-                                }
-                            }
+                            //TODO: какой то очень плохой Thread.Sleep. Заменим на более адекватную штуку.
+                            //Может, вообще избавться от OnPaused?
+                            //Ведь, управление паузой находится ВНЕ!
+                            //Ведь, приём состояния паузы находится ВНЕ!
+                            //if (!pauseEvent.IsSet)
+                            //    OnPaused?.Invoke(null, new(token.Id));
+
+                            pauseEvent.Wait();
+                            //if (token.Paused)
+                            //{
+                            //    OnPaused?.Invoke(null, new(token.Id));
+                            //    while (token.Paused)
+                            //    {
+                            //        Thread.Sleep(1000);
+                            //    }
+                            //}
 
 
                             byte[] proccessedData;

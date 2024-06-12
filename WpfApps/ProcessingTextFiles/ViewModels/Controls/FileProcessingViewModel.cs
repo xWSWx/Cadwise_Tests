@@ -122,12 +122,22 @@ namespace ProcessingTextFiles.ViewModels.Controls
         CustomCancellationToken cancelToken;
         //TODO: закрыть от редактирования. Отправлять копию. Публичный доступ вообще для тестов только
         public CustomCancellationToken CancelToken => cancelToken;
+        private ManualResetEventSlim eventSlim;
+        public ManualResetEventSlim EventSlim => eventSlim;
         private Guid id = Guid.NewGuid();
+
+        private bool _paused;
+        public bool Paused 
+        {
+            get => _paused;
+            set => this.RaiseAndSetIfChanged(ref _paused, value);
+        }
 
         public FileProcessingViewModel() 
         {
             FilePrefix = "Prefix-" + id.ToString()+".";
             cancelToken = new CustomCancellationToken(id);
+            eventSlim = new ManualResetEventSlim(true);
             SelectedActionIndex = 0;
             FileProcessor.OnProgress += (x, y) =>
             {
@@ -190,7 +200,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
                     MessageBox.Show("Prefix shuld be not empty string");
                     return;
                 }
-                if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, FileAction, CharactersCount))
+                if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, eventSlim, FileAction, CharactersCount))
                 {
                     IsPlayEnabled = false;
                     IsPauseEnabled = true;
@@ -199,11 +209,23 @@ namespace ProcessingTextFiles.ViewModels.Controls
                 };
             });
             Pause = ReactiveCommand.Create(() => 
-            { 
-                if (cancelToken.Paused) 
-                    cancelToken.Resume(); 
+            {
+                if (Paused)
+                {
+                    eventSlim.Set();
+                    CurentProcessingText = ResourcesNameSpace.Resources.RESUMED;
+                }
                 else 
-                    cancelToken.Pause();                
+                {
+                    eventSlim.Reset();
+                    CurentProcessingText = ResourcesNameSpace.Resources.PAUSED;
+                    
+                }
+                Paused = !Paused;
+                //if (cancelToken.Paused) 
+                //    cancelToken.Resume(); 
+                //else 
+                //    cancelToken.Pause();                
             });
             Cancel = ReactiveCommand.Create(() => 
             {
