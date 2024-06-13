@@ -75,7 +75,7 @@ namespace ProcessingTextFiles.Tests.ViewModels.Controls
             viewModel.Pause.Execute(null);
 
             // Assert
-            Assert.That(viewModel.EventSlim.IsSet, Is.Not.True);
+            Assert.That(viewModel.CancelToken.EventSlim.IsSet, Is.Not.True);
             Assert.That(viewModel.Paused, Is.True);            
             // Add more assertions as needed
         }
@@ -93,7 +93,7 @@ namespace ProcessingTextFiles.Tests.ViewModels.Controls
             viewModel.Pause.Execute(null); // Resume processing
 
             // Assert
-            Assert.That(viewModel.EventSlim.IsSet, Is.True);
+            Assert.That(viewModel.CancelToken.EventSlim.IsSet, Is.True);
         }
 
 

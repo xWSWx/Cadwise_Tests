@@ -122,8 +122,6 @@ namespace ProcessingTextFiles.ViewModels.Controls
         CustomCancellationToken cancelToken;
         //TODO: закрыть от редактирования. Отправлять копию. Публичный доступ вообще для тестов только
         public CustomCancellationToken CancelToken => cancelToken;
-        private ManualResetEventSlim eventSlim;
-        public ManualResetEventSlim EventSlim => eventSlim;
         private Guid id = Guid.NewGuid();
 
         private bool _paused;
@@ -138,7 +136,6 @@ namespace ProcessingTextFiles.ViewModels.Controls
 
             FilePrefix = "Prefix-" + id.ToString()+".";
             cancelToken = new CustomCancellationToken(id);
-            eventSlim = new ManualResetEventSlim(true);
             SelectedActionIndex = 0;
             FileProcessor.OnProgress += (x, y) =>
             {
@@ -185,6 +182,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
             Select = ReactiveCommand.Create(SelectFiles);
             Play = ReactiveCommand.Create(() =>
             {
+                cancelToken.Reset();
                 IFileProcessingStrategy strategy;
                 switch (FileAction)
                 {
@@ -208,7 +206,7 @@ namespace ProcessingTextFiles.ViewModels.Controls
                     MessageBox.Show("Prefix shuld be not empty string");
                     return;
                 }
-                if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, eventSlim, strategy, CharactersCount))
+                if (FileProcessor.Start(Files.Select(x => x.Path), FilePrefix, cancelToken, strategy, CharactersCount))
                 {
                     IsPlayEnabled = false;
                     IsPauseEnabled = true;
@@ -220,23 +218,20 @@ namespace ProcessingTextFiles.ViewModels.Controls
             {
                 if (Paused)
                 {
-                    eventSlim.Set();
+                    cancelToken.Resume();
                     CurentProcessingText = ResourcesNameSpace.Resources.RESUMED;
                 }
                 else 
                 {
-                    eventSlim.Reset();
+                    cancelToken.Pause();
                     CurentProcessingText = ResourcesNameSpace.Resources.PAUSED;
                     
                 }
-                Paused = !Paused;
-                //if (cancelToken.Paused) 
-                //    cancelToken.Resume(); 
-                //else 
-                //    cancelToken.Pause();                
+                Paused = !Paused;             
             });
             Cancel = ReactiveCommand.Create(() => 
             {
+                cancelToken.Resume();
                 cancelToken.Stop();
             });
             Delete = ReactiveCommand.Create(() => OnDelete?.Invoke(this, EventArgs.Empty));

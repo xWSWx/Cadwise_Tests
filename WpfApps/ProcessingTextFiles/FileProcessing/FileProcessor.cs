@@ -30,13 +30,13 @@ namespace ProcessingTextFiles.FileProcessing
         public static event GuidEventHandler OnStarted;
 
         static int bufferSize = 4096;
-        public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, ManualResetEventSlim pauseEvent, IFileProcessingStrategy fileProcessingStrategy, int maxwordSize ) 
+        public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, IFileProcessingStrategy fileProcessingStrategy, int maxwordSize ) 
         {
-            Task task = Task.Run(() => FileProcessor_TaskMethod(pathes, prefix, cancelToken, pauseEvent, fileProcessingStrategy, maxwordSize));            
+            Task task = Task.Run(() => FileProcessor_TaskMethod(pathes, prefix, cancelToken, fileProcessingStrategy, maxwordSize));            
             return true; 
         }
 
-        static async void FileProcessor_TaskMethod(IEnumerable<string> pathes, string prefix, CustomCancellationToken token, ManualResetEventSlim pauseEvent, IFileProcessingStrategy fileProcessingStrategy, int maxWordSize)
+        static async void FileProcessor_TaskMethod(IEnumerable<string> pathes, string prefix, CustomCancellationToken token, IFileProcessingStrategy fileProcessingStrategy, int maxWordSize)
         {
             OnStarted?.Invoke(null, new(token.Id));
             List<string> processedFiles = new List<string>();
@@ -92,6 +92,8 @@ namespace ProcessingTextFiles.FileProcessing
                         int unknowPartLength=0;
                         while ((bytesRead = inputStream.Read(buffer, 0, bufferSize)) > 0)
                         {
+                            token.Wait();
+
                             if (token.Cancelled)
                             {
                                 outputStream.Close();
@@ -104,8 +106,8 @@ namespace ProcessingTextFiles.FileProcessing
                                 return;
                             }
 
-                            pauseEvent.Wait();
-
+                            
+                            
                             byte[] proccessedData;
                             int proccessedBytesCout = 0;
 
