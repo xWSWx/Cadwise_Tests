@@ -20,7 +20,7 @@ namespace ProcessingTextFiles.FileProcessing
 
             foreach (var c in chars)
             {
-                if (!char.IsPunctuation(c))
+                if (!char.IsPunctuation(c) && c != '\0')
                 {
                     textAccumulator.Append(c);
                 }
