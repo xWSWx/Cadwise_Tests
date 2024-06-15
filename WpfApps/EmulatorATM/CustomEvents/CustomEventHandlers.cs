@@ -36,8 +36,7 @@ namespace EmulatorATM.CustomEvents
         public class PathEventArgs
         {
             public string path;
-            private PathEventArgs() : base() { }
-            public PathEventArgs(string path) : this()
+            public PathEventArgs(string path) 
             {
                 this.path = path;
             }
@@ -47,9 +46,8 @@ namespace EmulatorATM.CustomEvents
         public class StringGuidEventArgs
         {
             public string str;
-            public Guid id;
-            private StringGuidEventArgs() : base() { }
-            public StringGuidEventArgs(string str, Guid id) : this()
+            public Guid id;            
+            public StringGuidEventArgs(string str, Guid id)
             {
                 this.str = str;
                 this.id = id;

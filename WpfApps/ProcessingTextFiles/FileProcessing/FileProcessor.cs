@@ -18,16 +18,16 @@ namespace ProcessingTextFiles.FileProcessing
     public static class FileProcessor
     {
         //Закончили обработку файла
-        public static event StringGuidEventHandler OnFileDone;
+        public static StringGuidEventHandler? OnFileDone;
         //Закончили обработку всех файлов
-        public static event GuidEventHandler OnDone;
+        public static GuidEventHandler? OnDone;
         //Ошибка обработки файлов
-        public static event StringGuidEventHandler OnError;
+        public static StringGuidEventHandler? OnError;
         
-        public static event ProcessingHandler OnProgress;
+        public static ProcessingHandler? OnProgress;
 
-        public static event GuidEventHandler OnCancelled;
-        public static event GuidEventHandler OnStarted;
+        public static GuidEventHandler? OnCancelled;
+        public static GuidEventHandler? OnStarted;
 
         static int bufferSize = 4096;
         public static bool Start(IEnumerable<string> pathes, string prefix, CustomCancellationToken cancelToken, IFileProcessingStrategy fileProcessingStrategy, int maxwordSize ) 
@@ -50,13 +50,13 @@ namespace ProcessingTextFiles.FileProcessing
             {
                 if (string.IsNullOrEmpty(inputFilePath))
                 {
-                    OnError(null, new (inputFilePath, token.Id));
+                    OnError?.Invoke(null, new (inputFilePath, token.Id));
                     continue;
                 }
 
                 if (!File.Exists(inputFilePath))
                 {
-                    OnError(null, new (inputFilePath, token.Id));
+                    OnError?.Invoke(null, new(inputFilePath, token.Id));
                     continue;
                 }
 
@@ -68,13 +68,13 @@ namespace ProcessingTextFiles.FileProcessing
             {
                 if (string.IsNullOrEmpty(inputFilePath))
                 {
-                    OnError(null, new (inputFilePath, token.Id));
+                    OnError?.Invoke(null, new(inputFilePath, token.Id));
                     continue;
                 }
 
                 if (!File.Exists(inputFilePath))
                 {
-                    OnError(null, new (inputFilePath, token.Id));
+                    OnError?.Invoke(null, new(inputFilePath, token.Id));
                     continue;
                 }
 

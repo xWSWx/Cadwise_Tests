@@ -48,6 +48,7 @@ namespace EmulatorATM.ViewModels.Screens
             SmallWithdrawal = ReactiveCommand.Create(SmallWithdrawalProc);
             LargeWithdrawal = ReactiveCommand.Create(LargeWithdrawalProc);
             Back = ReactiveCommand.Create(() => OnBack?.Invoke(this, EventArgs.Empty));
+            AmountString = "0";
         }
         public override void Clear()
         {

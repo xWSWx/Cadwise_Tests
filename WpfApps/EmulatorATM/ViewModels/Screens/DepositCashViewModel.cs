@@ -30,7 +30,7 @@ namespace EmulatorATM.ViewModels.Screens
                 this.RaiseAndSetIfChanged(ref _insertedBalance, value);
             }
         }
-        private string _totalInsertedCash;
+        private string _totalInsertedCash = String.Empty;
         public string TotalInsertedCash
         {
             get => _totalInsertedCash;

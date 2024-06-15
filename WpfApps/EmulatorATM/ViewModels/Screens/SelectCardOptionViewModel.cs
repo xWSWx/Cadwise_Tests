@@ -33,7 +33,7 @@ namespace EmulatorATM.ViewModels.Screens
                 this.RaiseAndSetIfChanged(ref _balance, value);
             }
         }
-        private string _balanceString;
+        private string _balanceString = string.Empty;
         public string BalanceString
         {
             get => _balanceString;
@@ -95,7 +95,7 @@ namespace EmulatorATM.ViewModels.Screens
             }
         }
 
-        public void LoadCard(CardViewModel cardViewModel)
+        public void LoadCard(CardViewModel? cardViewModel)
         {
             if (cardViewModel == null)
             {
